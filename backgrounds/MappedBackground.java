@@ -138,10 +138,10 @@ public class MappedBackground implements Background {
 	
 	public ArrayList<DisplayableSprite> getBarriers() {
 		ArrayList<DisplayableSprite> barriers = new ArrayList<DisplayableSprite>();
-		for (int row = 0; row < map[0].length; row++) {
-			for (int col = 0; col < map.length; col++) {
-				if (map[col][row] == 1) {
-					barriers.add(new BarrierSprite(row * TILE_WIDTH, col * TILE_HEIGHT, (row + 1) * TILE_WIDTH, (col + 1) * TILE_HEIGHT, false));
+		for (int col = 0; col < map[0].length; col++) {
+			for (int row = 0; row < map.length; row++) {
+				if (map[row][col] == 1) {
+					barriers.add(new BarrierSprite(col * TILE_WIDTH, row * TILE_HEIGHT, (col + 1) * TILE_WIDTH, (row + 1) * TILE_HEIGHT, false));
 				}
 			}
 		}

@@ -99,6 +99,11 @@ public class BarrierSprite implements DisplayableSprite {
 		return dispose;
 	}
 
+	public void setDispose(boolean dispose) {
+		this.dispose = dispose;
+	}
+
+
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 			
 	}

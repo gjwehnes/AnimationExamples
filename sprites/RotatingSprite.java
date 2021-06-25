@@ -98,6 +98,11 @@ public class RotatingSprite implements DisplayableSprite {
 		return dispose;
 	}
 
+	public void setDispose(boolean dispose) {
+		this.dispose = dispose;
+	}
+
+
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 		
 		currentAngle -= (ROTATION_SPEED * (actual_delta_time * 0.001));

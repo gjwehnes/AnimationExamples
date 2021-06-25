@@ -1,51 +1,50 @@
 
 public class ExamplesAnimation implements Animation {
 
-	private static int universeCount = 0;
-	
-	public static int getUniverseCount() {
-		return universeCount;
-	}
-
-	public static void setUniverseCount(int count) {
-		ExamplesAnimation.universeCount = count;
-	}
+	private int universeCount = 0;
+	private Universe current = null;
 
 	public Universe getNextUniverse() {
 
 		universeCount++;
 		
 		if (universeCount == 1) {
-			return new SimpleSpriteUniverse();
+			this.current = new SimpleSpriteUniverse();
 		}
 		else if (universeCount == 2) {
-			return new BlinkySpriteUniverse();
+			this.current = new BlinkySpriteUniverse();
 		}
 		else if (universeCount == 3) {
-			return new AnimatedSpritesUniverse();
+			this.current = new AnimatedSpritesUniverse();
 		}
 		else if (universeCount == 4) {
-			return new JumpingSpriteUniverse();
+			this.current = new JumpingSpriteUniverse();
 		}
 		else if (universeCount == 5) {
-			return new SingleTileUniverse();
+			this.current = new SingleTileUniverse();
 		}
 		else if (universeCount == 6) {
-			return new PatternedUniverse();
+			this.current = new PatternedUniverse();
 		}
 		else if (universeCount == 7) {
-			return new MappedUniverse();
+			this.current = new MappedUniverse();
 		}
 		else if (universeCount == 8) {
 			return new ShootingSpriteUniverse();
 		}
 		else if (universeCount == 9) {
-			return new SateliteSpriteUniverse();
+			this.current = new SateliteSpriteUniverse();
 		}				
 		else {
-			return null;
+			this.current = null;
 		}
+		
+		return this.current;
 
+	}
+
+	public Universe getCurrentUniverse() {
+		return this.current;
 	}
 	
 }

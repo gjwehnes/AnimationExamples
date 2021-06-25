@@ -99,6 +99,11 @@ public class SateliteSprite implements DisplayableSprite {
 		return dispose;
 	}
 
+	public void setDispose(boolean dispose) {
+		this.dispose = dispose;
+	}
+
+
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 
 		//calculate new position assuming there are no changes in direction

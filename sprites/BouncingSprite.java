@@ -98,6 +98,11 @@ public class BouncingSprite implements DisplayableSprite {
 		return dispose;
 	}
 
+	public void setDispose(boolean dispose) {
+		this.dispose = dispose;
+	}
+
+
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 		
 		collisionDetection.calculate2DBounce(bounce, this, universe.getSprites(), velocityX, velocityY, actual_delta_time);

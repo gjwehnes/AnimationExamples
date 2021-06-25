@@ -202,10 +202,14 @@ public class AnimationFrame extends JFrame {
 				updateControls();
 
 				//REFRESH
+				this.scale = universe.getScale();
+				this.xCenter = universe.getXCenter();
+				this.yCenter = universe.getYCenter();
 				this.repaint();
 			}
 
 			universe = animation.getNextUniverse();
+			keyboard.poll();
 
 		}
 
@@ -237,12 +241,10 @@ public class AnimationFrame extends JFrame {
 		if (isPaused) {
 			isPaused = false;
 			this.btnPauseRun.setText("||");
-			((ExcitableSprite)this.player1).setIsEnergetic(true);
 		}
 		else {
 			isPaused = true;
 			this.btnPauseRun.setText(">");
-			((ExcitableSprite)this.player1).setIsEnergetic(false);
 		}
 	}
 
@@ -284,7 +286,7 @@ public class AnimationFrame extends JFrame {
 					}
 					else {
 						g.setColor(Color.BLUE);
-						g.fillRect(translateX(scale * (sprite.getMinX())), translateY(sprite.getMinY()), scaleX(sprite.getWidth()), scaleY(sprite.getHeight()));					
+						g.fillRect(translateX(sprite.getMinX()), translateY(sprite.getMinY()), scaleX(sprite.getWidth()), scaleY(sprite.getHeight()));
 					}
 				}
 
