@@ -138,7 +138,7 @@ public class JumpingSprite implements DisplayableSprite {
 		
 		collisionDetection.calculate2DBounce(bounce, this, universe.getSprites(), velocityX, velocityY, actual_delta_time);
 		this.centerX = bounce.newX + (width / 2);
-		this.centerY = bounce.newY + (width / 2);
+		this.centerY = bounce.newY + (height / 2);
 		this.velocityX = bounce.newVelocityX;
 		this.velocityY = bounce.newVelocityY;
 
