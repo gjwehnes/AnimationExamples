@@ -7,14 +7,16 @@ import javax.imageio.ImageIO;
 public class JumpingSprite implements DisplayableSprite {
 
 	
-	private double ACCCELERATION_X = 5;		//PIXELS PER SECOND PER SECOND
-	private double ACCCELERATION_Y = 600; 	//PIXELS PER SECOND PER SECOND
-	private double MAX_VELOCITY_X = 300;	//PIXELS PER SECOND
-	private double FRICTION_FACTOR_X = 0.95; 
+	//PIXELS PER SECOND PER SECOND
+	private final double ACCCELERATION_X = 5;
+	private final double ACCCELERATION_Y = 600;
+	private final double MAX_VELOCITY_X = 300;
+	private final double FRICTION_FACTOR_X = 0.95; 
+	private final double INITIAL_JUMP_VELOCITY = 600;
 
 	private boolean isJumping = false;
-	private final double INITIAL_JUMP_VELOCITY = 600; //pixels / second
 	
+	//required for advanced collision detection
 	private CollisionDetection collisionDetection;
 	TwoDimensionBounce bounce;
 
@@ -34,9 +36,11 @@ public class JumpingSprite implements DisplayableSprite {
 		this.centerY = centerY;		
 
 		collisionDetection = new CollisionDetection();
+		bounce = new TwoDimensionBounce();
+
+		//change behaviour of bounces, so that only 50% of energy is 'preserved' in horizontal bounce and 0% of energy is preserved in vertical bounce
 		collisionDetection.setBounceFactorX(0.5);
 		collisionDetection.setBounceFactorY(0);
-		bounce = new TwoDimensionBounce();
 		
 		if (image == null) {
 			try {

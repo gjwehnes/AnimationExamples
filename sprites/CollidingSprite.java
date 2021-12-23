@@ -4,9 +4,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class SimpleSprite implements DisplayableSprite {
-	
-	//a sprite that can be displayed and moves based on its own polling of the keyboard object
+public class CollidingSprite implements DisplayableSprite {
 
 	private static Image image;	
 	private double centerX = 0;
@@ -15,9 +13,9 @@ public class SimpleSprite implements DisplayableSprite {
 	private double height = 50;
 	private boolean dispose = false;	
 
-	private final double VELOCITY = 200;
+	private final double VELOCITY = 200;	
 	
-	public SimpleSprite(double centerX, double centerY) {
+	public CollidingSprite(double centerX, double centerY) {
 
 		this.centerX = centerX;
 		this.centerY = centerY;
@@ -25,7 +23,6 @@ public class SimpleSprite implements DisplayableSprite {
 		if (image == null) {
 			try {
 				image = ImageIO.read(new File("res/simple-sprite.png"));
-				//set the height and width based on the actual size of the image
 				this.height = this.image.getHeight(null);
 				this.width = this.image.getWidth(null);
 			}
@@ -34,6 +31,15 @@ public class SimpleSprite implements DisplayableSprite {
 			}		
 		}		
 	}
+	
+	//overloaded constructor which allows universe to change aspects of the sprite
+	public CollidingSprite(double centerX, double centerY, double height, double width) {
+		this(centerX, centerY);
+		
+		this.height = height;
+		this.width = width;
+	}
+	
 
 	public Image getImage() {
 		return image;
@@ -92,8 +98,6 @@ public class SimpleSprite implements DisplayableSprite {
 		double velocityX = 0;
 		double velocityY = 0;
 		
-		//set velocity based on current state of the keyboard
-		
 		//LEFT ARROW
 		if (keyboard.keyDown(37)) {
 			velocityX = -VELOCITY;
@@ -111,10 +115,39 @@ public class SimpleSprite implements DisplayableSprite {
 			velocityY += VELOCITY;			
 		}
 
-		//calculate new position based on velocity and time elapsed
-		this.centerX += actual_delta_time * 0.001 * velocityX;
-		this.centerY += actual_delta_time * 0.001 * velocityY;
+		//calculate potential change in position based on velocity and time elapsed		
+		double deltaX = actual_delta_time * 0.001 * velocityX;
+		double deltaY = actual_delta_time * 0.001 * velocityY;
 		
+		//before changing position, check if the new position would result in a collision with another sprite
+		//move only if no collision results
+		if (checkCollisionWithBarrier(universe, deltaX, 0) == false) {
+			this.centerX += deltaX;
+		}
+		//doing this check independently in each dimension allows a sprite to still move in the dimension it would
+		//not be colliding in.  i.e. the sprite can 'slide' down a wall if moving diagonal instead of stopping completely
+		//this behaviour can of course be changed.
+		if (checkCollisionWithBarrier(universe, 0, deltaY) == false) {
+			this.centerY += deltaY;
+		}
 	}
 
+	private boolean checkCollisionWithBarrier(Universe sprites, double deltaX, double deltaY) {
+
+		//deltaX and deltaY represent the potential change in position
+		boolean colliding = false;
+
+		for (DisplayableSprite sprite : sprites.getSprites()) {
+			if (sprite instanceof BarrierSprite) {
+				if (CollisionDetection.overlaps(this.getMinX() + deltaX, this.getMinY() + deltaY, 
+						this.getMaxX()  + deltaX, this.getMaxY() + deltaY, 
+						sprite.getMinX(),sprite.getMinY(), 
+						sprite.getMaxX(), sprite.getMaxY())) {
+					colliding = true;
+					break;					
+				}
+			}
+		}		
+		return colliding;		
+	}
 }

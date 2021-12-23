@@ -14,15 +14,6 @@ public class SimpleSpriteUniverse implements Universe {
 		player1 = new SimpleSprite(0,0);
 		sprites.add(player1);
 		
-		//top
-		sprites.add(new BarrierSprite(AnimationFrame.SCREEN_WIDTH / -2,AnimationFrame.SCREEN_HEIGHT / -2, AnimationFrame.SCREEN_WIDTH / 2, AnimationFrame.SCREEN_HEIGHT / -2 + 16, true));
-		//bottom
-		sprites.add(new BarrierSprite(AnimationFrame.SCREEN_WIDTH / -2,AnimationFrame.SCREEN_HEIGHT / 2 - 16, AnimationFrame.SCREEN_WIDTH / 2, AnimationFrame.SCREEN_HEIGHT / 2, true));
-		//left
-		sprites.add(new BarrierSprite(AnimationFrame.SCREEN_WIDTH / -2,AnimationFrame.SCREEN_HEIGHT / -2, AnimationFrame.SCREEN_WIDTH / -2 + 16, AnimationFrame.SCREEN_HEIGHT / 2, true));
-		//right
-		sprites.add(new BarrierSprite(AnimationFrame.SCREEN_WIDTH / 2 - 16,AnimationFrame.SCREEN_HEIGHT / -2, AnimationFrame.SCREEN_WIDTH / 2, AnimationFrame.SCREEN_HEIGHT / 2, true));
-		
 	}
 
 	public double getScale() {
@@ -82,7 +73,7 @@ public class SimpleSpriteUniverse implements Universe {
 	}
 
 	public String toString() {
-		return "SimpleCollisionDetectionUniverse";
+		return "SimpleUniverse";
 	}	
 
 

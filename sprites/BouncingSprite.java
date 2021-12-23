@@ -13,13 +13,16 @@ public class BouncingSprite implements DisplayableSprite {
 	private double height = 50;
 	private boolean dispose = false;	
 
-	private double ACCCELERATION_Y = 500;		//PIXELS PER SECOND PER MILLISECOND
-	private static final double VELOCITY = 200; //50 pixels per second
 	private static final int WIDTH = 50;
 	private static final int HEIGHT = 50;
 
-	private double velocityX = 300; //per second
-	private double velocityY = 300; //per second
+	//PIXELS PER SECOND PER SECOND
+	private double accelerationX = 0;
+	private double accelerationY = 0;		
+	private double velocityX = 300;
+	private double velocityY = 300;
+	
+	//required for advanced collision detection
 	private CollisionDetection collisionDetection;
 	TwoDimensionBounce bounce;
 
@@ -31,8 +34,6 @@ public class BouncingSprite implements DisplayableSprite {
 
 		collisionDetection = new CollisionDetection();
 		bounce = new TwoDimensionBounce();
-		collisionDetection.setBounceFactorX(1);
-		collisionDetection.setBounceFactorY(1);
 
 		this.velocityX = velocityX;
 		this.velocityY = velocityY;
@@ -51,12 +52,11 @@ public class BouncingSprite implements DisplayableSprite {
 
 	}
 
+	//DISPLAYABLE
 	public Image getImage() {
 		return image;
 	}
-	
-	//DISPLAYABLE
-	
+		
 	public boolean getVisible() {
 		return true;
 	}
@@ -92,8 +92,7 @@ public class BouncingSprite implements DisplayableSprite {
 	public double getCenterY() {
 		return centerY;
 	};
-	
-	
+		
 	public boolean getDispose() {
 		return dispose;
 	}
@@ -102,16 +101,54 @@ public class BouncingSprite implements DisplayableSprite {
 		this.dispose = dispose;
 	}
 
+	//Allow other objects to get / set velocity and acceleration
+	public double getAccelerationX() {
+		return accelerationX;
+	}
+
+	public void setAccelerationX(double accelerationX) {
+		this.accelerationX = accelerationX;
+	}
+
+	public double getAccelerationY() {
+		return accelerationY;
+	}
+
+	public void setAccelerationY(double accelerationY) {
+		this.accelerationY = accelerationY;
+	}
+
+	public double getVelocityX() {
+		return velocityX;
+	}
+
+	public void setVelocityX(double velocityX) {
+		this.velocityX = velocityX;
+	}
+
+	public double getVelocityY() {
+		return velocityY;
+	}
+
+	public void setVelocityY(double velocityY) {
+		this.velocityY = velocityY;
+	}
+
+	
 
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 		
+		//bouncing sprites do not just check for collision with other sprites, but also calculate their rebound
+		//velocity if they do collide. note the use of a separate class that provides both this rebound calculation
+		//and the regular motion
 		collisionDetection.calculate2DBounce(bounce, this, universe.getSprites(), velocityX, velocityY, actual_delta_time);
 		this.centerX = bounce.newX + (width / 2);
 		this.centerY = bounce.newY + (width / 2);
 		this.velocityX = bounce.newVelocityX;
 		this.velocityY = bounce.newVelocityY;			
 
-		this.velocityY = this.velocityY + ACCCELERATION_Y * 0.001 * actual_delta_time;
+		this.velocityX = this.velocityX + accelerationX * 0.001 * actual_delta_time;
+		this.velocityY = this.velocityY + accelerationY * 0.001 * actual_delta_time;
 	
 	}
 
