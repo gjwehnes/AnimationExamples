@@ -134,8 +134,6 @@ public class BouncingSprite implements DisplayableSprite {
 		this.velocityY = velocityY;
 	}
 
-	
-
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 		
 		//bouncing sprites do not just check for collision with other sprites, but also calculate their rebound

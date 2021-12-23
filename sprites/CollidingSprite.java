@@ -1,6 +1,7 @@
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -121,23 +122,23 @@ public class CollidingSprite implements DisplayableSprite {
 		
 		//before changing position, check if the new position would result in a collision with another sprite
 		//move only if no collision results
-		if (checkCollisionWithBarrier(universe, deltaX, 0) == false) {
+		if (checkCollisionWithBarrier(universe.getSprites(), deltaX, 0) == false) {
 			this.centerX += deltaX;
 		}
 		//doing this check independently in each dimension allows a sprite to still move in the dimension it would
 		//not be colliding in.  i.e. the sprite can 'slide' down a wall if moving diagonal instead of stopping completely
 		//this behaviour can of course be changed.
-		if (checkCollisionWithBarrier(universe, 0, deltaY) == false) {
+		if (checkCollisionWithBarrier(universe.getSprites(), 0, deltaY) == false) {
 			this.centerY += deltaY;
 		}
 	}
 
-	private boolean checkCollisionWithBarrier(Universe sprites, double deltaX, double deltaY) {
+	private boolean checkCollisionWithBarrier(ArrayList<DisplayableSprite> sprites, double deltaX, double deltaY) {
 
 		//deltaX and deltaY represent the potential change in position
 		boolean colliding = false;
 
-		for (DisplayableSprite sprite : sprites.getSprites()) {
+		for (DisplayableSprite sprite : sprites) {
 			if (sprite instanceof BarrierSprite) {
 				if (CollisionDetection.overlaps(this.getMinX() + deltaX, this.getMinY() + deltaY, 
 						this.getMaxX()  + deltaX, this.getMaxY() + deltaY, 

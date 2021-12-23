@@ -17,7 +17,7 @@ public class CollidingSpritesUniverse implements Universe {
 		
 		//add five other sprites, spread horizontally across the screen, with initial velocity
 		for (int i = 0; i < 5; i++) {
-			BouncingSprite sprite = new BouncingSprite(i * 100 - 200 , 0 , 200, 200);			
+			BouncingSprite sprite = new BouncingSprite(i * 100 - 200 , -100 , 200, 200);			
 			sprites.add(sprite);
 		}
 		
