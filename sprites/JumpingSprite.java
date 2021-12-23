@@ -8,10 +8,11 @@ public class JumpingSprite implements DisplayableSprite {
 
 	
 	//PIXELS PER SECOND PER SECOND
-	private final double ACCCELERATION_X = 5;
+	private final double ACCCELERATION_X = 300;
 	private final double ACCCELERATION_Y = 600;
 	private final double MAX_VELOCITY_X = 300;
-	private final double FRICTION_FACTOR_X = 0.95; 
+	private final double DEACCELERATION_X = 300;
+	private final double MINIMUM_X_VELOCITY = 1;
 	private final double INITIAL_JUMP_VELOCITY = 600;
 
 	private boolean isJumping = false;
@@ -109,8 +110,10 @@ public class JumpingSprite implements DisplayableSprite {
 
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 
+		//behaviour is dependant on whether the sprite is on the 'ground' or not. 
 		boolean onGround = isOnGround(universe);
-		
+
+		//design is to only allow change of x velocity while on ground
 		if (onGround) {
 
 			if (keyboard.keyDown(32)) {
@@ -120,26 +123,37 @@ public class JumpingSprite implements DisplayableSprite {
 			}
 			// RIGHT
 			if (keyboard.keyDown(39)) {
-				velocityX += + ACCCELERATION_X;
+				//velocityX will increase by a constant amount, up to a maximum
+				velocityX += actual_delta_time * 0.001 * ACCCELERATION_X;
 				if (velocityX > MAX_VELOCITY_X) {
 					velocityX = MAX_VELOCITY_X;
 				}
 			}
 			// LEFT
 			else if (keyboard.keyDown(37)) {
-				velocityX -= ACCCELERATION_X;
+				//velocityX will decrease by a constant amount, down to a minimum
+				velocityX -= actual_delta_time * 0.001 * ACCCELERATION_X;
 				if (velocityX < - MAX_VELOCITY_X) {
 					velocityX = - MAX_VELOCITY_X;
 				}
 			}
 			else {
-				this.velocityX = this.velocityX * FRICTION_FACTOR_X;
+				//if not moving left or right, then velocity will deaccelerate
+				//note the use of a practical limit to zero the movement; otherwise, velocity would never be exactly zero
+				if (Math.abs(this.velocityX) > MINIMUM_X_VELOCITY) {
+					this.velocityX -= actual_delta_time * 0.001 *  DEACCELERATION_X * Math.signum(this.velocityX);
+				}
+				else {
+					this.velocityX = 0;
+				}
+//				this.velocityX = this.velocityX * FRICTION_FACTOR_X;
 			}
 		}
 		else {
 			
 		}
 		
+		//sprite will use 2D bounce calculation; note that this will include all sprites in the universe, not just BarrierSprites
 		collisionDetection.calculate2DBounce(bounce, this, universe.getSprites(), velocityX, velocityY, actual_delta_time);
 		this.centerX = bounce.newX + (width / 2);
 		this.centerY = bounce.newY + (height / 2);
@@ -157,7 +171,9 @@ public class JumpingSprite implements DisplayableSprite {
 	private boolean isOnGround(Universe universe) {
 		boolean onGround = false;
 		for (DisplayableSprite sprite: universe.getSprites()) {
+			//does the bottom of this sprite touch the top of another sprite?
 			boolean bottomColiding = this.getMaxY() >= (sprite.getMinY()) && this.getMaxY() <= sprite.getMinY();
+			//is this sprite at least partially overlapping another sprite in the x dimension?
 			boolean withinRange = this.getMaxX() > sprite.getMinX() && this.getMinX() < sprite.getMaxX();
 			if (bottomColiding && withinRange) {
 				onGround = true;
