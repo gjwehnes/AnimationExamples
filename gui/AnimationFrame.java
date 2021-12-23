@@ -12,8 +12,8 @@ import java.awt.event.WindowEvent;
 public class AnimationFrame extends JFrame {
 
 	final public static int FRAMES_PER_SECOND = 60;
-	final public static int SCREEN_HEIGHT = 750;
-	final public static int SCREEN_WIDTH = 1000;
+	final public static int SCREEN_HEIGHT = 600;
+	final public static int SCREEN_WIDTH = 800;
 
 	private int xpCenter = SCREEN_WIDTH / 2;
 	private int ypCenter = SCREEN_HEIGHT / 2;
@@ -202,7 +202,6 @@ public class AnimationFrame extends JFrame {
 				updateControls();
 
 				//REFRESH
-				this.scale = universe.getScale();
 				this.xCenter = universe.getXCenter();
 				this.yCenter = universe.getYCenter();
 				this.repaint();

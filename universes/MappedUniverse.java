@@ -17,7 +17,7 @@ public class MappedUniverse implements Universe {
 		
 		((MappedBackground) background).getBarriers();
 
-		player1 = new SimpleSprite(MappedBackground.TILE_HEIGHT * 2, MappedBackground.TILE_WIDTH * 2, MappedBackground.TILE_HEIGHT * 0.9, MappedBackground.TILE_HEIGHT * 0.9);
+		player1 = new CollidingSprite(MappedBackground.TILE_HEIGHT * 2, MappedBackground.TILE_WIDTH * 2, MappedBackground.TILE_HEIGHT * 0.9, MappedBackground.TILE_HEIGHT * 0.9);
 		
 		sprites.add(player1);
 		sprites.addAll(barriers);
