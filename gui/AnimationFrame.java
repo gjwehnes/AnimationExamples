@@ -25,11 +25,8 @@ public class AnimationFrame extends JFrame {
 
 	private JPanel panel = null;
 	private JButton btnPauseRun;
-	private JLabel lblTimeLabel;
-	private JLabel lblTime;
-	private JLabel lblLevelLabel;
-	private JLabel lblLevel;
-	private JLabel lblStatus;;
+	private JLabel lblTop;
+	private JLabel lblBottom;
 
 	private static boolean stop = false;
 
@@ -97,45 +94,25 @@ public class AnimationFrame extends JFrame {
 		});
 
 		btnPauseRun.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnPauseRun.setBounds(20, 20, 48, 32);
+		btnPauseRun.setBounds(SCREEN_WIDTH - 64, 20, 48, 32);
 		btnPauseRun.setFocusable(false);
 		getContentPane().add(btnPauseRun);
 		getContentPane().setComponentZOrder(btnPauseRun, 0);
 
-		lblTimeLabel = new JLabel("Time: ");
-		lblTimeLabel.setForeground(Color.YELLOW);
-		lblTimeLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblTimeLabel.setBounds(80, 22, 96, 30);
-		getContentPane().add(lblTimeLabel);
-		getContentPane().setComponentZOrder(lblTimeLabel, 0);
+		lblTop = new JLabel("Time: ");
+		lblTop.setForeground(Color.WHITE);
+		lblTop.setFont(new Font("Consolas", Font.BOLD, 20));
+		lblTop.setBounds(16, 22, SCREEN_WIDTH - 16, 30);
+		getContentPane().add(lblTop);
+		getContentPane().setComponentZOrder(lblTop, 0);
 
-		lblTime = new JLabel("000");
-		lblTime.setForeground(Color.YELLOW);
-		lblTime.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblTime.setBounds(192, 22, 320, 30);
-		getContentPane().add(lblTime);
-		getContentPane().setComponentZOrder(lblTime, 0);
-
-		lblLevelLabel = new JLabel("Level: ");
-		lblLevelLabel.setForeground(Color.YELLOW);
-		lblLevelLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblLevelLabel.setBounds(528, 22, 128, 30);
-		getContentPane().add(lblLevelLabel);
-		getContentPane().setComponentZOrder(lblLevelLabel, 0);
-
-		lblLevel = new JLabel("1");
-		lblLevel.setForeground(Color.YELLOW);
-		lblLevel.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblLevel.setBounds(672, 22, 48, 30);
-		getContentPane().add(lblLevel);
-		getContentPane().setComponentZOrder(lblLevel, 0);
-
-		lblStatus = new JLabel("Status");
-		lblStatus.setForeground(Color.WHITE);
-		lblStatus.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblStatus.setBounds(0, SCREEN_HEIGHT - 30 - 16, SCREEN_WIDTH, 36);
-		getContentPane().add(lblStatus);
-		getContentPane().setComponentZOrder(lblStatus, 0);
+		lblBottom = new JLabel("Status");
+		lblBottom.setForeground(Color.WHITE);
+		lblBottom.setFont(new Font("Consolas", Font.BOLD, 30));
+		lblBottom.setBounds(16, SCREEN_HEIGHT - 30 - 16, SCREEN_WIDTH - 16, 36);
+		lblBottom.setHorizontalAlignment(SwingConstants.CENTER);
+		getContentPane().add(lblBottom);
+		getContentPane().setComponentZOrder(lblBottom, 0);
 
 	}
 
@@ -219,10 +196,11 @@ public class AnimationFrame extends JFrame {
 	}
 
 	private void updateControls() {
-		this.lblTime.setText(Long.toString(elapsed_time));
-		this.lblLevel.setText(Integer.toString(universeLevel));
+		
+		this.lblTop.setText(String.format("Time: %5.2f;  xpCenter: %5d; ypCenter: %5d;  scale: %3.3f", elapsed_time / 1000.0, xpCenter, ypCenter, scale));
+		this.lblBottom.setText(Integer.toString(universeLevel));
 		if (universe != null) {
-			this.lblStatus.setText(universe.toString());
+			this.lblBottom.setText(universe.toString());
 		}
 
 	}
@@ -260,6 +238,20 @@ public class AnimationFrame extends JFrame {
 		if (keyboard.keyDown(113)) {
 			scale /= 1.01;
 		}
+		
+		if (keyboard.keyDown(65)) {
+			xpCenter -= 1;
+		}
+		if (keyboard.keyDown(68)) {
+			xpCenter += 1;
+		}
+		if (keyboard.keyDown(83)) {
+			ypCenter -= 1;
+		}
+		if (keyboard.keyDown(88)) {
+			ypCenter += 1;
+		}
+		
 	}
 
 	class DrawPanel extends JPanel {
