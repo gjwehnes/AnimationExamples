@@ -9,6 +9,8 @@ public class BlinkySprite implements DisplayableSprite {
 	private static final double VELOCITY = 200;
 	private static final int WIDTH = 50;
 	private static final int HEIGHT = 50;
+	private static final int PERIOD_LENGTH = 200;
+	private static final int IMAGES_IN_CYCLE = 2;
 
 	private static Image[] images;
 	boolean isGhost = false;
@@ -19,7 +21,18 @@ public class BlinkySprite implements DisplayableSprite {
 	private double width = 50;
 	private double height = 50;
 	private boolean dispose = false;
-	private int direction = 0;		//0 = down; 1 = left; 2 = up; 3 = right
+
+	//an example of an enumeration, which is a series of constants in a list. this restricts the potential values of a variable
+	//declared with that type to only those values within the set, thereby promoting both code safety and readability
+	private Direction direction = Direction.UP;
+	
+	private enum Direction { DOWN(0), LEFT(1), UP(2), RIGHT(3);
+		private int value = 0;
+		private Direction(int value) {
+			this.value = value; 
+		} 
+	};
+
 	
 	public BlinkySprite(double centerX, double centerY) {
 
@@ -43,11 +56,14 @@ public class BlinkySprite implements DisplayableSprite {
 	}
 
 	public Image getImage() {
-		
-		long frame = elapsedTime / 200;
-		int phase = (int) (frame % 2);
-		int index = direction * 2 + phase;
-		
+				
+		//calculate how many periods of 200 milliseconds have elapsed since this sprite was instantiated?
+		long period = elapsedTime / PERIOD_LENGTH;
+		//calculate which image (aka 'frame') of the sprite animation should be shown out of the cycle of images
+		int image = (int) (period % IMAGES_IN_CYCLE);
+		//calculate index into array of all images. this is an arbitrary value, depending on how the image files are ordered
+		int index = direction.value * IMAGES_IN_CYCLE + image;
+						
 		return images[index];
 				
 	}
@@ -104,25 +120,39 @@ public class BlinkySprite implements DisplayableSprite {
 		
 		elapsedTime += actual_delta_time;
 		
-		//how many 2-second periods have elapsed?
-		long periods = (elapsedTime / 2000);
-		this.direction = (int) (periods % 4);
-		
-		double newX = getCenterX();
-		double newY = getCenterY();
-
-		if (direction == 0) {
-			newY += actual_delta_time * 0.001 * VELOCITY;
-		} else if (direction == 1) {		
-			newX -= actual_delta_time * 0.001 * VELOCITY;
-		} else if (direction == 2) {
-			newY -= actual_delta_time * 0.001 * VELOCITY;
-		} else {
-			newX += actual_delta_time * 0.001 * VELOCITY;
+		//set direction based on current location of sprite; this will cause the sprite to travel in a counter-clockwise circuit
+		//near the borders of the visible universe; this is an example of movement rules based on internal state as opposed to collision detection 
+		if ((this.centerY < -200) && direction == Direction.UP) {
+			//at top edge, move left
+			direction = Direction.LEFT;
+		}		
+		if ((this.centerY > 200) && direction == Direction.DOWN) {
+			//at bottom edge, move right
+			direction = Direction.RIGHT;
+		}
+		if ( (this.centerX < -350) && direction == Direction.LEFT) {
+			//at left edge, move down
+			direction = Direction.DOWN;
+		}
+		if ((this.centerX > 350) && direction == Direction.RIGHT) {
+			//at right edge, move up
+			direction = Direction.UP;
 		}
 
-		this.centerX =newX;
-		this.centerY = newY;			
-	
+		switch (direction) {
+		case UP:
+			this.centerY  -= actual_delta_time * 0.001 * VELOCITY;
+			break;
+		case DOWN:
+			this.centerY  += actual_delta_time * 0.001 * VELOCITY;
+			break;
+		case LEFT:
+			this.centerX -= actual_delta_time * 0.001 * VELOCITY;
+			break;
+		case RIGHT:
+			this.centerX += actual_delta_time * 0.001 * VELOCITY;
+			break;
+		}
+
 	}
 }

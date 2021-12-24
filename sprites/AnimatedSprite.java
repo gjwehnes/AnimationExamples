@@ -22,8 +22,8 @@ public class AnimatedSprite implements DisplayableSprite {
 	private static Image image;	
 	private double centerX = 0;
 	private double centerY = 0;
-	private double width = 50;
-	private double height = 50;
+	private double width = 200;
+	private double height = 200;
 	private boolean dispose = false;	
 	private double velocityX = 0;
 	private double velocityY = 0;
@@ -49,8 +49,6 @@ public class AnimatedSprite implements DisplayableSprite {
 			}
 			
 			if (frames[0] != null) {
-				width = frames[0].getWidth(null);
-				height = frames[0].getHeight(null);
 				framesLoaded = true;
 			}
 		}		

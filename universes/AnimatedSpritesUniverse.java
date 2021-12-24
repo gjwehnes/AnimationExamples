@@ -9,8 +9,10 @@ public class AnimatedSpritesUniverse implements Universe {
 	
 	public AnimatedSpritesUniverse () {
 	
-		sprites.add(new AnimatedSprite(-300,0, 30));
-		sprites.add(new RotatingSprite(150,-30));
+		sprites.add(new AnimatedSprite(-200,0, 30));
+		sprites.add(new RotatingSprite(200,0));
+		sprites.add(new SunSprite(0,0));
+		sprites.add(new BlinkySprite(300, 0));
 	
 	}
 	

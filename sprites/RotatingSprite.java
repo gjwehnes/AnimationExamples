@@ -19,8 +19,8 @@ public class RotatingSprite implements DisplayableSprite {
 
 	private double centerX = 0;
 	private double centerY = 0;
-	private double width = 50;
-	private double height = 50;
+	private double width = 200;
+	private double height = 200;
 	private boolean dispose = false;	
 	private double velocityX = 0;
 	private double velocityY = 0;
@@ -36,10 +36,7 @@ public class RotatingSprite implements DisplayableSprite {
 		if (framesLoaded == false) {
 			try {
 				defaultImage = ImageIO.read(new File("res/earth-polar-view.png"));
-				
-				width = defaultImage.getWidth(null);
-				height = defaultImage.getHeight(null);
-				
+								
 				for (int i = 0; i < FRAMES; i++) {
 					rotatedImages[i] = ImageRotator.rotate(defaultImage, i);
 				}
@@ -114,10 +111,6 @@ public class RotatingSprite implements DisplayableSprite {
 	    }
 	    
 	    int frame = (int)currentAngle;
-	    if (rotatedImages[frame] != null) {
-		    this.height = rotatedImages[frame].getHeight(null);
-		    this.width = rotatedImages[frame].getWidth(null);
-	    }
 	
 	}
 }
