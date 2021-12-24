@@ -145,9 +145,6 @@ public class SpaceShipSprite implements DisplayableSprite {
 	    }	
 	    
 	    currentAngle %= 360;
-		
-	    this.height =  rotatedImages[(int)currentAngle].getHeight(null);
-	    this.width = rotatedImages[(int)currentAngle].getWidth(null);
 	    
 		//calculate new position assuming there are no changes in direction
 	    double movement_x = (this.velocityX * actual_delta_time * 0.001);
