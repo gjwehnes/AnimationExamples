@@ -18,24 +18,21 @@ public class ExamplesAnimation implements Animation {
 			this.current = new JumpingSpriteUniverse();
 		}
 		else if (universeCount == 4) {
-			this.current = new BlinkySpriteUniverse();
-		}
-		else if (universeCount == 5) {
 			this.current = new AnimatedSpritesUniverse();
 		}
-		else if (universeCount == 6) {
+		else if (universeCount == 5) {
 			this.current = new SingleTileUniverse();
 		}
-		else if (universeCount == 7) {
+		else if (universeCount == 6) {
 			this.current = new PatternedUniverse();
 		}
-		else if (universeCount == 8) {
+		else if (universeCount == 7) {
 			this.current = new MappedUniverse();
 		}
-		else if (universeCount == 9) {
+		else if (universeCount == 8) {
 			return new ShootingSpriteUniverse();
 		}
-		else if (universeCount == 10) {
+		else if (universeCount == 9) {
 			this.current = new SateliteSpriteUniverse();
 		}				
 		else {
