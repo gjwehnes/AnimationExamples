@@ -48,29 +48,30 @@ public class CollisionDetection {
 	}
 	
 	public static boolean pixelBasedOverlaps(DisplayableSprite spriteA, DisplayableSprite spriteB) {
+		return pixelBasedOverlaps(spriteA, spriteB, 0, 0);
+	}
 
-		if (overlaps(spriteA.getMinX(), spriteA.getMinY(), spriteA.getMaxX(), spriteA.getMaxY(), 
-				spriteB.getMinX(), spriteB.getMinY(), spriteB.getMaxX(), spriteB.getMaxY()) == false) {
+	public static boolean pixelBasedOverlaps(DisplayableSprite spriteA, DisplayableSprite spriteB, double deltaAX, double deltaAY) {
+
+		if (overlaps(spriteA.getMinX(), spriteA.getMinY(), spriteA.getMaxX(), spriteA.getMaxY(), spriteB.getMinX(), spriteB.getMinY(), spriteB.getMaxX(), spriteB.getMaxY()) == false) {
 			return false;
 		}
 		
 		BufferedImage bufferedA = (BufferedImage) spriteA.getImage();
 		BufferedImage bufferedB = (BufferedImage) spriteB.getImage();
 		
-		int offsetX = (int) (spriteB.getMinX() - spriteA.getMinX());
-		int offsetY = (int) (spriteB.getMinY() - spriteA.getMinY());
+		int offsetX = (int) (spriteB.getMinX() - (spriteA.getMinX() + deltaAX));
+		int offsetY = (int) (spriteB.getMinY() - (spriteA.getMinY() + deltaAY));
 		
 		int left = Math.max(0, (int) (offsetX));
 		int top =  Math.max(0, (int) (offsetY));
-		int right = (int) (spriteA.getWidth() - Math.max(0, spriteA.getMaxX() - spriteB.getMaxX()));
-		int bottom = (int) (spriteA.getHeight() - Math.max(0, spriteA.getMaxY() - spriteB.getMaxY()));
+		int right = (int) (spriteA.getWidth() - Math.max(0, spriteA.getMaxX() + deltaAX - spriteB.getMaxX()));
+		int bottom = (int) (spriteA.getHeight() - Math.max(0, spriteA.getMaxY() + deltaAY - spriteB.getMaxY()));
 		
 		double scaleXA = bufferedA.getHeight() / (float)spriteA.getWidth();
 		double scaleYA = bufferedA.getHeight() / (float)spriteA.getHeight();
 		double scaleXB = bufferedB.getHeight() /  (float)spriteB.getWidth();
 		double scaleYB = bufferedB.getHeight() /  (float)spriteB.getHeight();
-
-//		System.out.println(String.format("left: %3d; top: %3d right: %3d; bottom: %3d", left,top,right,bottom)); 
 
 		for (int x = left; x < right; x++) {
 			for (int y = top; y < bottom; y++) {
@@ -81,17 +82,15 @@ public class CollisionDetection {
 				if ((xB >= 0) && (yB >= 0) && (yB < bufferedB.getWidth()) && (yB < bufferedB.getHeight())) {
 					int pixelA = bufferedA.getRGB(xA, yA);
 					int pixelB = bufferedB.getRGB(xB, yB);
-//					System.out.println(String.format("A: %02X; B): %02X",pixelA>>>24, pixelB>>>24)) ;
 					if ((pixelA>>>24 > 0x00) && (pixelB>>>24 > 0x00)) {
 						return true;
 					}
 				}
 			}
-		}
+		}	
 		
 		return false;
-		
-		
+				
 	}
 
 	public static boolean covers (double a_left, double a_top, double a_right, double a_bottom, double b_left, double b_top, double b_right, double b_bottom) {

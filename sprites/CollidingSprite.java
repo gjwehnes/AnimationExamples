@@ -23,9 +23,7 @@ public class CollidingSprite implements DisplayableSprite {
 		
 		if (image == null) {
 			try {
-				image = ImageIO.read(new File("res/simple-sprite.png"));
-				this.height = this.image.getHeight(null);
-				this.width = this.image.getWidth(null);
+				image = ImageIO.read(new File("res/pinball.png"));
 			}
 			catch (IOException e) {
 				System.out.println(e.toString());
@@ -122,13 +120,20 @@ public class CollidingSprite implements DisplayableSprite {
 		
 		//before changing position, check if the new position would result in a collision with another sprite
 		//move only if no collision results
-		if (checkCollisionWithBarrier(universe.getSprites(), deltaX, 0) == false) {
+		boolean collidingWithPinball = checkCollisionWithPinball(universe.getSprites(), deltaX, deltaY);
+		boolean collidingBarrierX = checkCollisionWithBarrier(universe.getSprites(), deltaX, 0);
+		boolean collidingBarrierY = checkCollisionWithBarrier(universe.getSprites(), 0, deltaY);
+		
+		System.out.println(collidingBarrierX);
+		
+		
+		if ((collidingWithPinball ||  collidingBarrierX) == false) {
 			this.centerX += deltaX;
 		}
 		//doing this check independently in each dimension allows a sprite to still move in the dimension it would
 		//not be colliding in.  i.e. the sprite can 'slide' down a wall if moving diagonal instead of stopping completely
 		//this behaviour can of course be changed.
-		if (checkCollisionWithBarrier(universe.getSprites(), 0, deltaY) == false) {
+		if ((collidingWithPinball ||  collidingBarrierY) == false) {
 			this.centerY += deltaY;
 		}
 	}
@@ -151,4 +156,23 @@ public class CollidingSprite implements DisplayableSprite {
 		}		
 		return colliding;		
 	}
+	
+	private boolean checkCollisionWithPinball(ArrayList<DisplayableSprite> sprites, double deltaX, double deltaY) {
+
+		//deltaX and deltaY represent the potential change in position
+		boolean colliding = false;
+
+		for (DisplayableSprite sprite : sprites) {
+			if (sprite instanceof PinballSprite) {
+				
+				
+				if (CollisionDetection.pixelBasedOverlaps(this, sprite, deltaX, deltaY)) {
+					colliding = true;
+					break;					
+				}
+			}
+		}		
+		return colliding;		
+	}
+	
 }
