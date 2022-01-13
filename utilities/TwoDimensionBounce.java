@@ -5,7 +5,7 @@ public class TwoDimensionBounce {
 	protected double newVelocityY = 0;
 	protected double newX = 0;
 	protected double newY = 0;
-	protected boolean justBounced = false;
+//	protected boolean justBounced = false;
 
 	public TwoDimensionBounce() {		
 	}
