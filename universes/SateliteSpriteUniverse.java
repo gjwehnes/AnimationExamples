@@ -54,9 +54,9 @@ public class SateliteSpriteUniverse implements Universe {
 		complete = true;
 	}
 
-	public Background getBackground() {
-		return background;
-	}
+	public ArrayList<Background> getBackgrounds() {
+		return null;
+	}	
 
 	public DisplayableSprite getPlayer1() {
 		return player1;
@@ -92,7 +92,6 @@ public class SateliteSpriteUniverse implements Universe {
 			DisplayableSprite sprite = sprites.get(i);
     		if (sprite.getDispose() == true) {
     			disposedSprites.add(sprite);
-    			System.out.println(String.format("Dispose: %s", sprite.toString()));
     		}
     	}
 		for (int i = 0; i < disposedSprites.size(); i++) {

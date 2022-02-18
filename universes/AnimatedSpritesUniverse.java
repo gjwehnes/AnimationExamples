@@ -74,6 +74,12 @@ public class AnimatedSpritesUniverse implements Universe {
 	
 	public String toString() {
 		return "AnimatedSpritesUniverse";
+	}
+
+	@Override
+	public ArrayList<Background> getBackgrounds() {
+		// TODO Auto-generated method stub
+		return null;
 	}	
 
 }

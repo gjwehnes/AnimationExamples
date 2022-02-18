@@ -22,18 +22,11 @@ public class PinballSprite implements DisplayableSprite {
 	private double velocityX = 0;
 	private double velocityY = 0;
 	
-	//required for advanced collision detection
-	private CollisionDetection collisionDetection;
-	TwoDimensionBounce bounce;
-
 	public PinballSprite(double centerX, double centerY) {
 
 		super();
 		this.centerX = centerX;
 		this.centerY = centerY;	
-
-		collisionDetection = new CollisionDetection();
-		bounce = new TwoDimensionBounce();
 
 		if (image == null) {
 			try {

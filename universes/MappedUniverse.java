@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class MappedUniverse implements Universe {
 
-
-	private boolean complete = false;	
+	private boolean complete = false;
+	private ArrayList<Background> backgrounds = null;
 	private Background background = null;	
 	private DisplayableSprite player1 = null;
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
@@ -14,14 +14,14 @@ public class MappedUniverse implements Universe {
 
 		background = new MappedBackground();
 		ArrayList<DisplayableSprite> barriers = ((MappedBackground)background).getBarriers();
+		backgrounds =new ArrayList<Background>();
+		backgrounds.add(background);
 		
-		((MappedBackground) background).getBarriers();
-
 		player1 = new CollidingSprite(MappedBackground.TILE_HEIGHT * 2, MappedBackground.TILE_WIDTH * 2, MappedBackground.TILE_HEIGHT * 0.9, MappedBackground.TILE_HEIGHT * 0.9);
 		
 		sprites.add(player1);
 		sprites.addAll(barriers);
-
+		
 	}
 
 	public double getScale() {
@@ -52,9 +52,9 @@ public class MappedUniverse implements Universe {
 		complete = true;
 	}
 
-	public Background getBackground() {
-		return background;
-	}
+	public ArrayList<Background> getBackgrounds() {
+		return backgrounds;
+	}	
 
 	public DisplayableSprite getPlayer1() {
 		return player1;

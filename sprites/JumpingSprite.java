@@ -19,7 +19,7 @@ public class JumpingSprite implements DisplayableSprite {
 	
 	//required for advanced collision detection
 	private CollisionDetection collisionDetection;
-	TwoDimensionBounce bounce;
+	private VirtualSprite virtual = new VirtualSprite();
 
 	private static Image image;
 	private double centerX = 0;
@@ -37,7 +37,6 @@ public class JumpingSprite implements DisplayableSprite {
 		this.centerY = centerY;		
 
 		collisionDetection = new CollisionDetection();
-		bounce = new TwoDimensionBounce();
 
 		//change behaviour of bounces, so that only 50% of energy is 'preserved' in horizontal bounce and 0% of energy is preserved in vertical bounce
 		collisionDetection.setBounceFactorX(0.5);
@@ -154,11 +153,11 @@ public class JumpingSprite implements DisplayableSprite {
 		}
 		
 		//sprite will use 2D bounce calculation; note that this will include all sprites in the universe, not just BarrierSprites
-		collisionDetection.calculate2DBounce(bounce, this, universe.getSprites(), velocityX, velocityY, actual_delta_time);
-		this.centerX = bounce.newX + (width / 2);
-		this.centerY = bounce.newY + (height / 2);
-		this.velocityX = bounce.newVelocityX;
-		this.velocityY = bounce.newVelocityY;
+		collisionDetection.calculate2DBounce(virtual, this, universe.getSprites(), velocityX, velocityY, actual_delta_time);
+		this.centerX = virtual.getCenterX();
+		this.centerY = virtual.getCenterY();
+		this.velocityX = virtual.getVelocityX();
+		this.velocityY = virtual.getVelocityY();			
 
 		if (onGround == true) {
 			this.velocityY = 0;

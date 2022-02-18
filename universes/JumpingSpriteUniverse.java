@@ -4,7 +4,6 @@ import java.util.ArrayList;
 public class JumpingSpriteUniverse implements Universe {
 
 	private boolean complete = false;	
-	private Background background = null;	
 	private DisplayableSprite player1 = null;
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
 	
@@ -60,9 +59,9 @@ public class JumpingSpriteUniverse implements Universe {
 		complete = true;
 	}
 
-	public Background getBackground() {
-		return background;
-	}
+	public ArrayList<Background> getBackgrounds() {
+		return null;
+	}	
 
 	public DisplayableSprite getPlayer1() {
 		return player1;

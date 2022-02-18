@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class PatternedUniverse implements Universe {
 
 	private boolean complete = false;	
+	private ArrayList<Background> backgrounds = null;
 	private Background background = null;	
 	private DisplayableSprite player1 = null;
 	private double xCenter = 0;
@@ -12,6 +13,8 @@ public class PatternedUniverse implements Universe {
 	public PatternedUniverse () {
 	
 		background = new AberhartBackground();
+		backgrounds =new ArrayList<Background>();
+		backgrounds.add(background);
 
 		player1 = new SimpleSprite(0,0);
 		sprites.add(player1);
@@ -46,9 +49,9 @@ public class PatternedUniverse implements Universe {
 		complete = true;
 	}
 
-	public Background getBackground() {
-		return background;
-	}
+	public ArrayList<Background> getBackgrounds() {
+		return backgrounds;
+	}	
 
 	public DisplayableSprite getPlayer1() {
 		return player1;

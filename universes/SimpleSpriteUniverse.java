@@ -42,9 +42,9 @@ public class SimpleSpriteUniverse implements Universe {
 		complete = true;
 	}
 
-	public Background getBackground() {
-		return background;
-	}
+	public ArrayList<Background> getBackgrounds() {
+		return null;
+	}	
 
 	public DisplayableSprite getPlayer1() {
 		return player1;
@@ -74,7 +74,7 @@ public class SimpleSpriteUniverse implements Universe {
 
 	public String toString() {
 		return "SimpleUniverse";
-	}	
+	}
 
 
 }

@@ -96,16 +96,11 @@ public class MappedBackground implements Background {
 		return newTile;
 	}
 	
-	public int getHorizontal(int x) {
-		//which tile is x sitting at?
-		return 0;
-	}
-
-	public int getCol(int x) {
+	public int getCol(double x) {
 		//which col is x sitting at?
 		int col = 0;
 		if (TILE_WIDTH != 0) {
-			col = (x / TILE_WIDTH);
+			col = (int) (x / TILE_WIDTH);
 			if (x < 0) {
 				return col - 1;
 			}
@@ -118,12 +113,12 @@ public class MappedBackground implements Background {
 		}
 	}
 	
-	public int getRow(int y) {
+	public int getRow(double y) {
 		//which row is y sitting at?
 		int row = 0;
 		
 		if (TILE_HEIGHT != 0) {
-			row = (y / TILE_HEIGHT);
+			row = (int) (y / TILE_HEIGHT);
 			if (y < 0) {
 				return row - 1;
 			}
@@ -146,6 +141,26 @@ public class MappedBackground implements Background {
 			}
 		}
 		return barriers;
+	}
+
+	@Override
+	public double getShiftX() {
+		return 0;
+	}
+
+	@Override
+	public double getShiftY() {
+		return 0;
+	}
+
+	@Override
+	public void setShiftX(int shiftX) {
+		//ignore
+	}
+
+	@Override
+	public void setShiftY(int shiftY) {
+		//ignore
 	}
 	
 }

@@ -5,6 +5,7 @@ public class ShootingSpriteUniverse implements Universe {
 
 	private boolean complete = false;	
 	private Background background = null;	
+	private ArrayList<Background> backgrounds = null;
 	private DisplayableSprite player1 = null;
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
 	ArrayList<DisplayableSprite> disposedSprites = new ArrayList<DisplayableSprite>();
@@ -13,6 +14,8 @@ public class ShootingSpriteUniverse implements Universe {
 	
 		player1 = new SpaceShipSprite(0,0);
 		background = new StarfieldBackground();
+		backgrounds =new ArrayList<Background>();
+		backgrounds.add(background);
 		
 		this.sprites.add(player1);
 	
@@ -46,9 +49,9 @@ public class ShootingSpriteUniverse implements Universe {
 		complete = true;
 	}
 
-	public Background getBackground() {
-		return background;
-	}
+	public ArrayList<Background> getBackgrounds() {
+		return backgrounds;
+	}	
 
 	public DisplayableSprite getPlayer1() {
 		return player1;
@@ -84,7 +87,6 @@ public class ShootingSpriteUniverse implements Universe {
 			DisplayableSprite sprite = sprites.get(i);
     		if (sprite.getDispose() == true) {
     			disposedSprites.add(sprite);
-    			System.out.println(String.format("Dispose: %s", sprite.toString()));
     		}
     	}
 		for (int i = 0; i < disposedSprites.size(); i++) {

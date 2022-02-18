@@ -24,7 +24,7 @@ public class BouncingSprite implements DisplayableSprite {
 	
 	//required for advanced collision detection
 	private CollisionDetection collisionDetection;
-	TwoDimensionBounce bounce;
+	private VirtualSprite virtual = new VirtualSprite();
 
 	public BouncingSprite(double centerX, double centerY, double velocityX, double velocityY) {
 
@@ -33,7 +33,6 @@ public class BouncingSprite implements DisplayableSprite {
 		this.centerY = centerY;	
 
 		collisionDetection = new CollisionDetection();
-		bounce = new TwoDimensionBounce();
 
 		this.velocityX = velocityX;
 		this.velocityY = velocityY;
@@ -133,17 +132,17 @@ public class BouncingSprite implements DisplayableSprite {
 	public void setVelocityY(double velocityY) {
 		this.velocityY = velocityY;
 	}
-
+	
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 		
 		//bouncing sprites do not just check for collision with other sprites, but also calculate their rebound
 		//velocity if they do collide. note the use of a separate class that provides both this rebound calculation
 		//and the regular motion
-		collisionDetection.calculate2DBounce(bounce, this, universe.getSprites(), velocityX, velocityY, actual_delta_time);
-		this.centerX = bounce.newX + (width / 2);
-		this.centerY = bounce.newY + (width / 2);
-		this.velocityX = bounce.newVelocityX;
-		this.velocityY = bounce.newVelocityY;			
+		collisionDetection.calculate2DBounce(virtual, this, universe.getSprites(), velocityX, velocityY, actual_delta_time);
+		this.centerX = virtual.getCenterX();
+		this.centerY = virtual.getCenterY();
+		this.velocityX = virtual.getVelocityX();
+		this.velocityY = virtual.getVelocityY();			
 
 		this.velocityX = this.velocityX + accelerationX * 0.001 * actual_delta_time;
 		this.velocityY = this.velocityY + accelerationY * 0.001 * actual_delta_time;

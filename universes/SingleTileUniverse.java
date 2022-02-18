@@ -5,6 +5,7 @@ public class SingleTileUniverse implements Universe {
 
 	private boolean complete = false;	
 	private Background background = null;	
+	private ArrayList<Background> backgrounds = null;
 	private DisplayableSprite player1 = null;
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
 	private double xCenter = 0;
@@ -13,6 +14,8 @@ public class SingleTileUniverse implements Universe {
 	public SingleTileUniverse () {
 	
 		background = new StarfieldBackground();
+		backgrounds =new ArrayList<Background>();
+		backgrounds.add(background);
 
 		player1 = new SimpleSprite(0,0);
 		sprites.add(player1);
@@ -47,9 +50,9 @@ public class SingleTileUniverse implements Universe {
 		complete = true;
 	}
 
-	public Background getBackground() {
-		return background;
-	}
+	public ArrayList<Background> getBackgrounds() {
+		return backgrounds;
+	}	
 
 	public DisplayableSprite getPlayer1() {
 		return player1;
