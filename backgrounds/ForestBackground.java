@@ -4,19 +4,19 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class AberhartBackground implements Background {
+public class ForestBackground implements Background {
 
-    private Image aberhart;
-    private Image blank;
+    private Image image;
     private int backgroundWidth = 0;
     private int backgroundHeight = 0;
+    private double shiftX = 0;
+    private double shiftY = 0;
 
-    public AberhartBackground() {
+    public ForestBackground() {
     	try {
-    		this.aberhart = ImageIO.read(new File("res/backgrounds/aberhart-tiles/aberhart.png"));
-    		this.blank = ImageIO.read(new File("res/backgrounds/aberhart-tiles/blank.png"));
-    		backgroundWidth = aberhart.getWidth(null);
-    		backgroundHeight = blank.getHeight(null);
+    		this.image = ImageIO.read(new File("res/backgrounds/forest_midground.png"));
+    		backgroundWidth = image.getWidth(null);
+    		backgroundHeight = image.getHeight(null);
     		
     	}
     	catch (IOException e) {
@@ -31,10 +31,10 @@ public class AberhartBackground implements Background {
 		int y = (row * backgroundHeight);
 		Tile newTile = null;
 		
-		if (((col + row) % 2) == 0 ) {
-			newTile = new Tile(aberhart, x, y, backgroundWidth, backgroundHeight, false);
+		if (row == -1) {
+			newTile = new Tile(image, x, y, backgroundWidth, backgroundHeight, false);
 		} else {
-			newTile = new Tile(blank, x, y, backgroundWidth, backgroundHeight, false);
+			newTile = new Tile(null, x, y, backgroundWidth, backgroundHeight, false);
 		}
 			
 		
@@ -79,22 +79,22 @@ public class AberhartBackground implements Background {
 
 	@Override
 	public double getShiftX() {
-		return 0;
+		return shiftX;
 	}
 
 	@Override
 	public double getShiftY() {
-		return 0;
+		return shiftY;
 	}
 
 	@Override
 	public void setShiftX(int shiftX) {
-		//ignore
+		this.shiftX = shiftX;		
 	}
 
 	@Override
 	public void setShiftY(int shiftY) {
-		//ignore
+		this.shiftY = shiftY;		
 	}
 	
 }

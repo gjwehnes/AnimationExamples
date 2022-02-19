@@ -298,19 +298,23 @@ public class AnimationFrame extends JFrame {
 				}				
 			}
 		}
-		
+				
 		private void paintBackground(Graphics g, Background background) {
 			
 			if ((g == null) || (background == null)) {
 				return;
 			}
 			
-			//what tile covers the top-left corner?
-			double logicalLeft = (logicalCenterX  - (screenCenterX / scale) - background.getShiftX());
-			double logicalTop =  (logicalCenterY - (screenCenterY / scale) - background.getShiftY()) ;
+			double shiftLogicalX = background.getShiftX();
+			double shiftLogicalY = background.getShiftY();
 						
-			int row = background.getRow((int)(logicalTop - background.getShiftY() ));
-			int col = background.getCol((int)(logicalLeft - background.getShiftX()  ));
+			//what tile covers the top-left corner?
+			double logicalLeft = ( logicalCenterX  - (screenCenterX / scale) - shiftLogicalX);
+			double logicalTop =  (logicalCenterY - (screenCenterY / scale) - shiftLogicalY) ;
+			
+			
+			int row = background.getRow((int)(logicalTop - shiftLogicalY ));
+			int col = background.getCol((int)(logicalLeft - shiftLogicalX  ));
 			Tile tile = background.getTile(col, row);
 			
 			boolean rowDrawn = false;
@@ -329,10 +333,10 @@ public class AnimationFrame extends JFrame {
 						Tile nextTile = background.getTile(col+1, row+1);
 						int width = translateToScreenX(nextTile.getMinX()) - translateToScreenX(tile.getMinX());
 						int height = translateToScreenY(nextTile.getMinY()) - translateToScreenY(tile.getMinY());
-						g.drawImage(tile.getImage(), translateToScreenX(tile.getMinX() + background.getShiftX()), translateToScreenY(tile.getMinY() + background.getShiftY()), width, height, null);
+						g.drawImage(tile.getImage(), translateToScreenX(tile.getMinX() + shiftLogicalX), translateToScreenY(tile.getMinY() + shiftLogicalY), width, height, null);
 					}					
 					//does the RHE of this tile extend past the RHE of the visible area?
-					if (translateToScreenX(tile.getMinX() + background.getShiftX() + tile.getWidth()) > SCREEN_WIDTH || tile.isOutOfBounds()) {
+					if (translateToScreenX(tile.getMinX() + shiftLogicalX + tile.getWidth()) > SCREEN_WIDTH || tile.isOutOfBounds()) {
 						rowDrawn = true;
 					}
 					else {
@@ -340,16 +344,18 @@ public class AnimationFrame extends JFrame {
 					}
 				}
 				//does the bottom edge of this tile extend past the bottom edge of the visible area?
-				if (translateToScreenY(tile.getMinY() + background.getShiftY() + tile.getHeight()) > SCREEN_HEIGHT || tile.isOutOfBounds()) {
+				if (translateToScreenY(tile.getMinY() + shiftLogicalY + tile.getHeight()) > SCREEN_HEIGHT || tile.isOutOfBounds()) {
 					screenDrawn = true;
 				}
 				else {
-					col = background.getCol(logicalLeft);
+					//TODO - should be passing in a double, as this represents a universe coordinate
+					col = background.getCol((int)logicalLeft);
 					row++;
 					rowDrawn = false;
 				}
 			}
-		}				
+		}			
+		
 	}
 
 	private int translateToScreenX(double logicalX) {

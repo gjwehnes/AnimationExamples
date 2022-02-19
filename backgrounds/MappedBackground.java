@@ -49,11 +49,11 @@ public class MappedBackground implements Background {
     
     public MappedBackground() {
     	try {
-    		this.wood = ImageIO.read(new File("res/castle-tiles/wood_tile.jpg"));
-    		this.stone = ImageIO.read(new File("res/castle-tiles/stone_tile.jpg"));
-    		this.water = ImageIO.read(new File("res/castle-tiles/water_tile.jpg"));
-    		this.path = ImageIO.read(new File("res/castle-tiles/lightstonepath.png"));    		
-    		this.grass = ImageIO.read(new File("res/castle-tiles/grass.jpg"));    		
+    		this.wood = ImageIO.read(new File("res/backgrounds/map-tiles/wood_tile.jpg"));
+    		this.stone = ImageIO.read(new File("res/backgrounds/map-tiles/stone_tile.jpg"));
+    		this.water = ImageIO.read(new File("res/backgrounds/map-tiles/water_tile.jpg"));
+    		this.path = ImageIO.read(new File("res/backgrounds/map-tiles/lightstonepath.png"));    		
+    		this.grass = ImageIO.read(new File("res/backgrounds/map-tiles/grass.jpg"));    		
     	}
     	catch (IOException e) {
     		//System.out.println(e.toString());

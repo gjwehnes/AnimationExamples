@@ -4,20 +4,21 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class AberhartBackground implements Background {
+public class MountainBackground implements Background {
 
-    private Image aberhart;
-    private Image blank;
+    private Image image;
     private int backgroundWidth = 0;
     private int backgroundHeight = 0;
+    private int offsetX = 0;
+    private double shiftX = 0;
+    private double shiftY = 0;
 
-    public AberhartBackground() {
+    public MountainBackground() {
     	try {
-    		this.aberhart = ImageIO.read(new File("res/backgrounds/aberhart-tiles/aberhart.png"));
-    		this.blank = ImageIO.read(new File("res/backgrounds/aberhart-tiles/blank.png"));
-    		backgroundWidth = aberhart.getWidth(null);
-    		backgroundHeight = blank.getHeight(null);
-    		
+    		this.image = ImageIO.read(new File("res/backgrounds/mountain_silhouette.png"));
+    		backgroundWidth = image.getWidth(null);
+    		backgroundHeight = image.getHeight(null);
+    		offsetX = backgroundWidth / 2  ;  		
     	}
     	catch (IOException e) {
     		//System.out.println(e.toString());
@@ -27,14 +28,14 @@ public class AberhartBackground implements Background {
 	public Tile getTile(int col, int row) {
 		//row is an index of tiles, with 0 being the at the origin
 		//col is an index of tiles, with 0 being the at the origin
-		int x = (col * backgroundWidth);
+		int x = (col * backgroundWidth) - offsetX;
 		int y = (row * backgroundHeight);
 		Tile newTile = null;
 		
-		if (((col + row) % 2) == 0 ) {
-			newTile = new Tile(aberhart, x, y, backgroundWidth, backgroundHeight, false);
+		if (row == -1 ) {
+			newTile = new Tile(image, x, y, backgroundWidth, backgroundHeight, false);
 		} else {
-			newTile = new Tile(blank, x, y, backgroundWidth, backgroundHeight, false);
+			newTile = new Tile(null, x, y, backgroundWidth, backgroundHeight, false);
 		}
 			
 		
@@ -46,7 +47,7 @@ public class AberhartBackground implements Background {
 		//which col is x sitting at?
 		int col = 0;
 		if (backgroundWidth != 0) {
-			col = (int) (x / backgroundWidth);
+			col = (int) ((x - offsetX)  / backgroundWidth);
 			if (x < 0) {
 				return col - 1;
 			}
@@ -79,22 +80,22 @@ public class AberhartBackground implements Background {
 
 	@Override
 	public double getShiftX() {
-		return 0;
+		return shiftX;
 	}
 
 	@Override
 	public double getShiftY() {
-		return 0;
+		return shiftY;
 	}
 
 	@Override
 	public void setShiftX(int shiftX) {
-		//ignore
+		this.shiftX = shiftX;		
 	}
 
 	@Override
 	public void setShiftY(int shiftY) {
-		//ignore
+		this.shiftY = shiftY;		
 	}
 	
 }
