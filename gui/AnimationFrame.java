@@ -274,7 +274,7 @@ public class AnimationFrame extends JFrame {
 
 			if (player1 != null && centreOnPlayer) {
 				logicalCenterX = player1.getCenterX();
-				logicalCenterY = player1.getCenterY();     
+				logicalCenterY = player1.getCenterY();
 			}
 
 			if (backgrounds != null) {
@@ -306,15 +306,19 @@ public class AnimationFrame extends JFrame {
 			}
 			
 			double shiftLogicalX = background.getShiftX();
-			double shiftLogicalY = background.getShiftY();
-						
+			double shiftLogicalY = background.getShiftY();			
+
+			
+			if (background instanceof NightSkyBackground) {
+				System.out.println();
+			}
+			
 			//what tile covers the top-left corner?
 			double logicalLeft = ( logicalCenterX  - (screenCenterX / scale) - shiftLogicalX);
 			double logicalTop =  (logicalCenterY - (screenCenterY / scale) - shiftLogicalY) ;
 			
-			
-			int row = background.getRow((int)(logicalTop - shiftLogicalY ));
-			int col = background.getCol((int)(logicalLeft - shiftLogicalX  ));
+			int row = background.getRow((int)(logicalTop));
+			int col = background.getCol((int)(logicalLeft));
 			Tile tile = background.getTile(col, row);
 			
 			boolean rowDrawn = false;
@@ -333,7 +337,11 @@ public class AnimationFrame extends JFrame {
 						Tile nextTile = background.getTile(col+1, row+1);
 						int width = translateToScreenX(nextTile.getMinX()) - translateToScreenX(tile.getMinX());
 						int height = translateToScreenY(nextTile.getMinY()) - translateToScreenY(tile.getMinY());
-						g.drawImage(tile.getImage(), translateToScreenX(tile.getMinX() + shiftLogicalX), translateToScreenY(tile.getMinY() + shiftLogicalY), width, height, null);
+						g.drawImage(tile.getImage(), translateToScreenX(tile.getMinX() + shiftLogicalX), translateToScreenY(tile.getMinY() + shiftLogicalY), width + 1, height + 1, null);
+						if (background instanceof NightSkyBackground) {
+							System.out.println(String.format("screenX: %5d; screenY: %5d; width: %5d; height: %5d", translateToScreenX(tile.getMinX() + shiftLogicalX), translateToScreenY(tile.getMinY() + shiftLogicalY), width, height));
+						}
+						
 					}					
 					//does the RHE of this tile extend past the RHE of the visible area?
 					if (translateToScreenX(tile.getMinX() + shiftLogicalX + tile.getWidth()) > SCREEN_WIDTH || tile.isOutOfBounds()) {

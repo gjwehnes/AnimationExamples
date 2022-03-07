@@ -32,13 +32,7 @@ public class NightSkyBackground implements Background {
 		int y = (row * backgroundHeight);
 		Tile newTile = null;
 		
-		if (row == -1 ) {
-			newTile = new Tile(image, x, y, backgroundWidth, backgroundHeight, false);
-		} else {
-			newTile = new Tile(null, x, y, backgroundWidth, backgroundHeight, false);
-		}
-			
-		
+		newTile = new Tile(image, x, y, backgroundWidth, backgroundHeight, false);		
 		
 		return newTile;
 	}
@@ -89,12 +83,12 @@ public class NightSkyBackground implements Background {
 	}
 
 	@Override
-	public void setShiftX(int shiftX) {
+	public void setShiftX(double shiftX) {
 		this.shiftX = shiftX;		
 	}
 
 	@Override
-	public void setShiftY(int shiftY) {
+	public void setShiftY(double shiftY) {
 		this.shiftY = shiftY;		
 	}
 	

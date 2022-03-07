@@ -6,7 +6,8 @@ import javax.imageio.ImageIO;
 
 public class ForestBackground implements Background {
 
-    private Image image;
+    private Image forestImage;
+    private Image blackImage;
     private int backgroundWidth = 0;
     private int backgroundHeight = 0;
     private double shiftX = 0;
@@ -14,9 +15,10 @@ public class ForestBackground implements Background {
 
     public ForestBackground() {
     	try {
-    		this.image = ImageIO.read(new File("res/backgrounds/forest_midground.png"));
-    		backgroundWidth = image.getWidth(null);
-    		backgroundHeight = image.getHeight(null);
+    		this.forestImage = ImageIO.read(new File("res/backgrounds/forest_midground.png"));
+    		this.blackImage = ImageIO.read(new File("res/blue-barrier.png"));
+    		backgroundWidth = forestImage.getWidth(null);
+    		backgroundHeight = forestImage.getHeight(null);
     		
     	}
     	catch (IOException e) {
@@ -32,8 +34,11 @@ public class ForestBackground implements Background {
 		Tile newTile = null;
 		
 		if (row == -1) {
-			newTile = new Tile(image, x, y, backgroundWidth, backgroundHeight, false);
-		} else {
+			newTile = new Tile(forestImage, x, y, backgroundWidth, backgroundHeight, false);
+		} else if (row >= 0) {			
+			newTile = new Tile(blackImage, x, y, backgroundWidth, backgroundHeight, false);
+		}
+		else {
 			newTile = new Tile(null, x, y, backgroundWidth, backgroundHeight, false);
 		}
 			
@@ -88,12 +93,12 @@ public class ForestBackground implements Background {
 	}
 
 	@Override
-	public void setShiftX(int shiftX) {
+	public void setShiftX(double shiftX) {
 		this.shiftX = shiftX;		
 	}
 
 	@Override
-	public void setShiftY(int shiftY) {
+	public void setShiftY(double shiftY) {
 		this.shiftY = shiftY;		
 	}
 	

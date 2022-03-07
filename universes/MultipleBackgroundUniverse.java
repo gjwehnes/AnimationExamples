@@ -77,18 +77,18 @@ public class MultipleBackgroundUniverse implements Universe {
 		if (keyboard.keyDownOnce(27)) {
 			complete = true;
 		}
-		
-		this.skyBackground.setShiftX((int) (player1.getCenterX() * 1));
-		this.skyBackground.setShiftY((int) (player1.getCenterY() * 1 - 200));
-		this.mountainBackground.setShiftX((int) (player1.getCenterX() * 0.75));
-		this.mountainBackground.setShiftY((int) (player1.getCenterY() * 1));
-		this.forestBackground.setShiftX((int) (player1.getCenterX() * 0.5));
-		this.forestBackground.setShiftY((int) (player1.getCenterY() * 1 + 20));
-		
+				
 		for (int i = 0; i < sprites.size(); i++) {
 			DisplayableSprite sprite = sprites.get(i);
 			sprite.update(this, keyboard, actual_delta_time);
-    	} 
+    	}
+
+		this.skyBackground.setShiftX((player1.getCenterX() * 1));
+		this.mountainBackground.setShiftX((player1.getCenterX() * 0.85));
+		this.forestBackground.setShiftX((player1.getCenterX() * 0.5));
+		this.skyBackground.setShiftY((player1.getCenterY() * 1 - 200));
+		this.mountainBackground.setShiftY((player1.getCenterY() * 0.85 + 50));
+		this.forestBackground.setShiftY((player1.getCenterY() * 0.5 + 20));
 		
 		
 	}
