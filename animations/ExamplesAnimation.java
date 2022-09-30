@@ -9,8 +9,7 @@ public class ExamplesAnimation implements Animation {
 		universeCount++;
 		
 		if (universeCount == 1) {
-//			this.current = new SimpleSpriteUniverse();
-			this.current = new MultipleBackgroundUniverse();
+			this.current = new SimpleSpriteUniverse();
 		}
 		else if (universeCount == 2) {
 			this.current = new CollidingSpritesUniverse();
