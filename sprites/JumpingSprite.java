@@ -50,8 +50,6 @@ public class JumpingSprite implements DisplayableSprite {
 				System.err.println(e.toString());
 			}		
 		}
-		this.height = image.getHeight(null);
-		this.width = image.getWidth(null);
 		
 	}
 

@@ -15,17 +15,7 @@ public class BarrierSprite implements DisplayableSprite {
 	private boolean dispose = false;
 	
 	public BarrierSprite() {
-
-		if (image == null) {
-			try {
-				image = ImageIO.read(new File("res/gjw/simple-sprite.png"));
-				this.height = this.image.getHeight(null);
-				this.width = this.image.getWidth(null);
-			}
-			catch (IOException e) {
-				System.out.println(e.toString());
-			}		
-		}		
+	
 	}
 	
 	public BarrierSprite(double minX, double minY, double maxX, double maxY, boolean visible) {

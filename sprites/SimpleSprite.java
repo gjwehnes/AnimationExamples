@@ -25,9 +25,6 @@ public class SimpleSprite implements DisplayableSprite {
 		if (image == null) {
 			try {
 				image = ImageIO.read(new File("res/simple-sprite.png"));
-				//set the height and width based on the actual size of the image
-				this.height = this.image.getHeight(null);
-				this.width = this.image.getWidth(null);
 			}
 			catch (IOException e) {
 				System.out.println(e.toString());
@@ -114,7 +111,7 @@ public class SimpleSprite implements DisplayableSprite {
 		//calculate new position based on velocity and time elapsed
 		this.centerX += actual_delta_time * 0.001 * velocityX;
 		this.centerY += actual_delta_time * 0.001 * velocityY;
-		
+				
 	}
 
 }

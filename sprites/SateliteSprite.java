@@ -42,6 +42,7 @@ public class SateliteSprite implements DisplayableSprite {
 				System.err.println(e.toString());
 			}		
 		}
+		//height and width is dependent on diameter parameter
 		this.height = ((int) diameter);
 		this.width = ((int) diameter);
 		

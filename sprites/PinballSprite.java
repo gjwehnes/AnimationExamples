@@ -13,6 +13,7 @@ public class PinballSprite implements DisplayableSprite {
 	private double height = 50;
 	private boolean dispose = false;	
 
+	//if height and width will not change, then set these as constants
 	private static final int WIDTH = 100;
 	private static final int HEIGHT = 100;
 

@@ -9,6 +9,8 @@ import javax.imageio.ImageIO;
 
 public class SpaceShipSprite implements DisplayableSprite {
 
+	private static final int WIDTH = 120;
+	private static final int HEIGHT = 120;
 	
 	private static Image[] rotatedImages = new Image[360];
 	private AudioPlayer thrustSound = new AudioPlayer();
@@ -25,8 +27,8 @@ public class SpaceShipSprite implements DisplayableSprite {
 	private static Image image;	
 	private double centerX = 0;
 	private double centerY = 0;
-	private double width = 50;
-	private double height = 50;
+	private double width = WIDTH;
+	private double height = HEIGHT;
 	private boolean dispose = false;	
 	private double velocityX = 0;
 	private double velocityY = 0;
@@ -48,9 +50,7 @@ public class SpaceShipSprite implements DisplayableSprite {
 			for (int i = 0; i < 360; i++) {
 				rotatedImages[i] = ImageRotator.rotate(image, i);			
 			}
-			width = image.getWidth(null);
-			height = image.getHeight(null);
-		}
+		}		
 	}
 
 	public Image getImage() {
