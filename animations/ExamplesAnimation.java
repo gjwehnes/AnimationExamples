@@ -1,7 +1,7 @@
 
 public class ExamplesAnimation implements Animation {
 
-	private int universeCount = 8;
+	private int universeCount = 0;
 	private Universe current = null;
 
 	public Universe getNextUniverse() {
