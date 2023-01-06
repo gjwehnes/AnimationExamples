@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class MultipleBackgroundUniverse implements Universe {
 
+	private static final int GROUND_MINY = 250;
 	private boolean complete = false;	
 	private Background mountainBackground = null;	
 	private Background forestBackground = null;	
@@ -24,8 +25,9 @@ public class MultipleBackgroundUniverse implements Universe {
 		
 		this.setXCenter(0);
 		this.setYCenter(0);
-		player1 = new SimpleSprite(00,0);
+		player1 = new JumpingSprite(0, -250);
 		sprites.add(player1);
+		sprites.add(new BarrierSprite(Double.MIN_VALUE, 0, Double.MAX_VALUE, 500, false));
 			
 	}
 
@@ -34,11 +36,11 @@ public class MultipleBackgroundUniverse implements Universe {
 	}
 
 	public double getXCenter() {
-		return 0;
+		return this.player1.getCenterX();
 	}
 
 	public double getYCenter() {
-		return 0;
+		return -GROUND_MINY;
 	}
 
 	public void setXCenter(double xCenter) {
@@ -64,7 +66,7 @@ public class MultipleBackgroundUniverse implements Universe {
 	}
 
 	public boolean centerOnPlayer() {
-		return true;
+		return false;
 	}		
 
 	@Override
@@ -86,9 +88,6 @@ public class MultipleBackgroundUniverse implements Universe {
 		this.skyBackground.setShiftX((player1.getCenterX() * 1));
 		this.mountainBackground.setShiftX((player1.getCenterX() * 0.85));
 		this.forestBackground.setShiftX((player1.getCenterX() * 0.5));
-		this.skyBackground.setShiftY((player1.getCenterY() * 1 - 200));
-		this.mountainBackground.setShiftY((player1.getCenterY() * 0.85 + 50));
-		this.forestBackground.setShiftY((player1.getCenterY() * 0.5 + 20));
 		
 		
 	}
