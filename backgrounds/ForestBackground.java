@@ -16,7 +16,7 @@ public class ForestBackground implements Background {
     public ForestBackground() {
     	try {
     		this.forestImage = ImageIO.read(new File("res/backgrounds/forest_midground.png"));
-    		this.blackImage = ImageIO.read(new File("res/blue-barrier.png"));
+    		this.blackImage = ImageIO.read(new File("res/backgrounds/black.png"));
     		backgroundWidth = forestImage.getWidth(null);
     		backgroundHeight = forestImage.getHeight(null);
     		
