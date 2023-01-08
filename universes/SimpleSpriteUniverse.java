@@ -69,6 +69,7 @@ public class SimpleSpriteUniverse implements Universe {
 			sprite.update(this, keyboard, actual_delta_time);
     	} 
 		
+		System.out.println(ConsoleUtility.describeSpriteCenter(this.player1));
 		
 	}
 
