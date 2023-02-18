@@ -155,7 +155,7 @@ public class JumpingSprite implements DisplayableSprite {
 		this.centerX = virtual.getCenterX();
 		this.centerY = virtual.getCenterY();
 		this.velocityX = virtual.getVelocityX();
-		this.velocityY = virtual.getVelocityY();			
+		this.velocityY = virtual.getVelocityY();
 
 		if (onGround == true) {
 			this.velocityY = 0;
@@ -169,9 +169,12 @@ public class JumpingSprite implements DisplayableSprite {
 		boolean onGround = false;
 		for (DisplayableSprite sprite: universe.getSprites()) {
 			//does the bottom of this sprite touch the top of another sprite?
-			boolean bottomColiding = this.getMaxY() >= (sprite.getMinY()) && this.getMaxY() <= sprite.getMinY();
+			boolean bottomColiding = Math.abs(this.getMaxY() - sprite.getMinY()) < 5;
 			//is this sprite at least partially overlapping another sprite in the x dimension?
-			boolean withinRange = this.getMaxX() > sprite.getMinX() && this.getMinX() < sprite.getMaxX();
+			boolean toRight = this.getMinX() > sprite.getMaxX();
+			boolean toLeft = this.getMaxX() < sprite.getMinX();
+			boolean withinRange = (toRight == false) && (toLeft == false);
+			
 			if (bottomColiding && withinRange) {
 				onGround = true;
 				break;
