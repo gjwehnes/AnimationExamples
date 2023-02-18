@@ -13,7 +13,7 @@ public class ShootingSpriteUniverse implements Universe {
 	public ShootingSpriteUniverse () {
 	
 		player1 = new SpaceShipSprite(0,0);
-		background = new StarfieldBackground();
+		background = new StarfieldBackground("res/backgrounds/starfield.jpg");
 		backgrounds =new ArrayList<Background>();
 		backgrounds.add(background);
 		

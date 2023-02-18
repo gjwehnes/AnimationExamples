@@ -13,7 +13,7 @@ public class SingleTileUniverse implements Universe {
 	
 	public SingleTileUniverse () {
 	
-		background = new StarfieldBackground();
+		background = new StarfieldBackground("res/backgrounds/grid.jpg");
 		backgrounds =new ArrayList<Background>();
 		backgrounds.add(background);
 

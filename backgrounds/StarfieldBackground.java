@@ -10,9 +10,9 @@ public class StarfieldBackground implements Background {
     private int backgroundWidth = 0;
     private int backgroundHeight = 0;
 
-    public StarfieldBackground() {
+    public StarfieldBackground(String imagePath) {
     	try {
-    		this.starfield = ImageIO.read(new File("res/backgrounds/starfield.jpg"));
+    		this.starfield = ImageIO.read(new File(imagePath));
     		backgroundWidth = starfield.getWidth(null);
     		backgroundHeight = starfield.getHeight(null);
     		
