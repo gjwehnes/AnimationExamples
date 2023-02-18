@@ -8,8 +8,6 @@ public class SingleTileUniverse implements Universe {
 	private ArrayList<Background> backgrounds = null;
 	private DisplayableSprite player1 = null;
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
-	private double xCenter = 0;
-	private double yCenter = 0;
 	
 	public SingleTileUniverse () {
 	
@@ -27,19 +25,17 @@ public class SingleTileUniverse implements Universe {
 	}
 
 	public double getXCenter() {
-		return this.xCenter;
+		return this.player1.getCenterX();
 	}
 
 	public double getYCenter() {
-		return this.yCenter;
+		return this.player1.getCenterY();
 	}
 	
 	public void setXCenter(double xCenter) {
-		this.xCenter = xCenter;
 	}
 
 	public void setYCenter(double yCenter) {
-		this.yCenter = yCenter;
 	}
 	
 	public boolean isComplete() {

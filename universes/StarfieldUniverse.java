@@ -26,19 +26,17 @@ public class StarfieldUniverse implements Universe {
 	}
 
 	public double getXCenter() {
-		return 0;
+		return this.player1.getCenterX();
 	}
 
 	public double getYCenter() {
-		return 0;
+		return this.player1.getCenterY();
 	}
 	
 	public void setXCenter(double xCenter) {
-		this.setXCenter(xCenter);
 	}
 
 	public void setYCenter(double yCenter) {
-		this.setYCenter(yCenter);
 	}
 	
 	public boolean isComplete() {
