@@ -4,13 +4,13 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class StarfieldBackground implements Background {
+public class SingleTileBackground implements Background {
 
     private Image starfield;
     private int backgroundWidth = 0;
     private int backgroundHeight = 0;
 
-    public StarfieldBackground(String imagePath) {
+    public SingleTileBackground(String imagePath) {
     	try {
     		this.starfield = ImageIO.read(new File(imagePath));
     		backgroundWidth = starfield.getWidth(null);
