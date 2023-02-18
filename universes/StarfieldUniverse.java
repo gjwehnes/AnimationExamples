@@ -1,7 +1,7 @@
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-public class ShootingSpriteUniverse implements Universe {
+public class StarfieldUniverse implements Universe {
 
 	private boolean complete = false;	
 	private Background background = null;	
@@ -10,7 +10,7 @@ public class ShootingSpriteUniverse implements Universe {
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
 	ArrayList<DisplayableSprite> disposedSprites = new ArrayList<DisplayableSprite>();
 	
-	public ShootingSpriteUniverse () {
+	public StarfieldUniverse () {
 	
 		player1 = new SpaceShipSprite(0,0);
 		background = new SingleTileBackground("res/backgrounds/starfield.jpg");

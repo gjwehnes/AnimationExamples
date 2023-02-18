@@ -36,7 +36,7 @@ public class ExamplesAnimation implements Animation {
 			this.current = new MultipleBackgroundUniverse();
 		}
 		else if (universeCount == 10) {
-			return new ShootingSpriteUniverse();
+			return new StarfieldUniverse();
 		}
 		else {
 			this.current = null;
