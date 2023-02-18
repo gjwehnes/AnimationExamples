@@ -192,8 +192,8 @@ public class CollisionDetection {
 				
 	}
 
-	public void calculate2DBounce(VirtualSprite twoDBounce, DisplayableSprite sprite, ArrayList<DisplayableSprite> barriers, double velocityX, double velocityY, long actual_delta_time ) {
-		calculate2DBounce(twoDBounce, sprite, barriers, velocityX,  velocityY,  actual_delta_time, null);
+	public void calculate2DBounce(VirtualSprite bounce, DisplayableSprite sprite, ArrayList<DisplayableSprite> barriers, double velocityX, double velocityY, long actual_delta_time ) {
+		calculate2DBounce(bounce, sprite, barriers, velocityX,  velocityY,  actual_delta_time, null);
 	}
 
 	
@@ -208,6 +208,8 @@ public class CollisionDetection {
 		bounce.velocityY = velocityY;
 		bounce.centerX = sprite.getCenterX();
 		bounce.centerY = sprite.getCenterY();
+		bounce.width = sprite.getWidth();
+		bounce.height = sprite.getHeight();
 		bounce.didBounce = false;		
 
 		//calculate new position assuming there are no changes in direction
