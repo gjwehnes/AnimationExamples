@@ -27,7 +27,7 @@ public class MultipleBackgroundUniverse implements Universe {
 		this.setYCenter(0);
 		player1 = new JumpingSprite(0, -250);
 		sprites.add(player1);
-		sprites.add(new BarrierSprite(-1000000, 0, 1000000, 500, true));
+		sprites.add(new BarrierSprite(-1000000, 0, 1000000, 500, false));
 			
 	}
 
