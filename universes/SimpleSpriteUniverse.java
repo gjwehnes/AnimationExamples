@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+/*
+ * Each Universe implements the Universe interface. This allows all other classes to be able to generically access important
+ * information such as the scale, center, and the list of backgrounds and sprites that it contains.
+ */
 public class SimpleSpriteUniverse implements Universe {
 
 	private boolean complete = false;	
@@ -9,17 +13,29 @@ public class SimpleSpriteUniverse implements Universe {
 
 	public SimpleSpriteUniverse () {
 
-		this.setXCenter(0);
-		this.setYCenter(0);
+		/*
+		 * Constructors truly "create" the universe.
+		 */
+		
 		player1 = new SimpleSprite(0,0);
 		sprites.add(player1);
 		
 	}
 
+	/*
+	 * The 'scale at which a universe is rendered is normally determined by the gui, as it likely depends on the size
+	 * of the frame in which it is rendered. However, it may still make sense for the universe to determine scale through
+	 * this accessor. Currently the gui ignores the value and sets the scale based on user input but it could be used..
+	 */
 	public double getScale() {
 		return 1;
 	}
 
+	/*
+	 * The logical x and y coordinate determine where the gui should center. That is, centerX and centerY will correspond
+	 * to the middle of the frame. As this is hard-coded here, the player1 sprite will move around the screen when its
+	 * centerX and centerY are changed.
+	 */
 	public double getXCenter() {
 		return 0;
 	}
@@ -28,16 +44,23 @@ public class SimpleSpriteUniverse implements Universe {
 		return 0;
 	}
 
+	/*
+	 * In some cases, you may want the gui to determine the logical x and y coordinates, in which case these mutators
+	 * can be used.
+	 */
 	public void setXCenter(double xCenter) {
 	}
 
 	public void setYCenter(double yCenter) {
 	}
-
+	
 	public boolean isComplete() {
 		return complete;
 	}
 
+	/*
+	 * In some cases, you may want the gui to terminate a universe, in which case this mutators can be used.
+	 */
 	public void setComplete(boolean complete) {
 		complete = true;
 	}
