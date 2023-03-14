@@ -371,6 +371,7 @@ public class AnimationFrame extends JFrame {
 						g.setColor(Color.GRAY);
 						g.fillRect(0,0, SCREEN_WIDTH, SCREEN_HEIGHT);					
 						rowDrawn = true;
+						screenDrawn = true;		
 					}
 					else {
 						Tile nextTile = background.getTile(col+1, row+1);
