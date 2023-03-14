@@ -365,12 +365,12 @@ public class AnimationFrame extends JFrame {
 			while (screenDrawn == false) {
 				while (rowDrawn == false) {
 					tile = background.getTile(col, row);
+										
 					if (tile.getWidth() <= 0 || tile.getHeight() <= 0) {
 						//no increase in width; will cause an infinite loop, so consider this screen to be done
 						g.setColor(Color.GRAY);
 						g.fillRect(0,0, SCREEN_WIDTH, SCREEN_HEIGHT);					
 						rowDrawn = true;
-						screenDrawn = true;						
 					}
 					else {
 						Tile nextTile = background.getTile(col+1, row+1);
