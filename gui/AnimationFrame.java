@@ -281,16 +281,16 @@ public class AnimationFrame extends JFrame {
 		}
 		
 		if (keyboard.keyDown(65)) {
-			screenCenterX -= 1;
-		}
-		if (keyboard.keyDown(68)) {
 			screenCenterX += 1;
 		}
+		if (keyboard.keyDown(68)) {
+			screenCenterX -= 1;
+		}
 		if (keyboard.keyDown(83)) {
-			screenCenterY -= 1;
+			screenCenterY += 1;
 		}
 		if (keyboard.keyDown(88)) {
-			screenCenterY += 1;
+			screenCenterY -= 1;
 		}
 		
 	}
