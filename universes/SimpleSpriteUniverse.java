@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class SimpleSpriteUniverse implements Universe {
 
 	private boolean complete = false;	
-	private Background background = null;	
 	private DisplayableSprite player1 = null;
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
 
@@ -18,6 +17,13 @@ public class SimpleSpriteUniverse implements Universe {
 		 */
 		
 		player1 = new SimpleSprite(0,0);
+		ImageSprite background = new ImageSprite(-407, -307, 410, 308, "res/backgrounds/grid.jpg");
+
+		/*
+		 * The order in which sprites are added to the sprites list matters. Sprites added earlier will have a lower
+		 * index and will be rendered earlier. Sprites added later will thus appear 'in front' of sprites added earlier.
+		 */
+		sprites.add(background);
 		sprites.add(player1);
 		
 	}
