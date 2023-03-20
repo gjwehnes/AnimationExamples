@@ -13,7 +13,18 @@ public class BlinkySprite implements DisplayableSprite {
 	private static final int IMAGES_IN_CYCLE = 2;
 
 	private static Image[] images;
-	boolean isGhost = false;
+	/* 
+	 * an alternate way of storing the images. if the sprite is simple and only has
+	 * a few images, you may want to create explicit pointers to each image*/
+	private static Image left0;
+	private static Image right0;
+	private static Image up0;
+	private static Image down0;
+	private static Image left1;
+	private static Image right1;
+	private static Image up1;
+	private static Image down1;
+	
 	private long elapsedTime = 0;
 		
 	private double centerX = 0;
@@ -22,10 +33,10 @@ public class BlinkySprite implements DisplayableSprite {
 	private double height = 50;
 	private boolean dispose = false;
 
-	//an example of an enumeration, which is a series of constants in a list. this restricts the potential values of a variable
-	//declared with that type to only those values within the set, thereby promoting both code safety and readability
 	private Direction direction = Direction.UP;
 	
+	//an example of an enumeration, which is a series of constants in a list. this restricts the potential values of a variable
+	//declared with that type to only those values within the set, thereby promoting both code safety and readability
 	private enum Direction { DOWN(0), LEFT(1), UP(2), RIGHT(3);
 		private int value = 0;
 		private Direction(int value) {
@@ -53,6 +64,17 @@ public class BlinkySprite implements DisplayableSprite {
 				System.err.println(e.toString());
 			}		
 		}
+
+		/* an alternate way of storing the images */
+		down0 = images[0];
+		down1= images[1];
+		left0 = images[2];
+		left1 = images[3];
+		up0= images[4];
+		up1= images[5];
+		right0 = images[6];
+		right1 = images[7];
+		
 	}
 
 	public Image getImage() {
@@ -61,11 +83,37 @@ public class BlinkySprite implements DisplayableSprite {
 		long period = elapsedTime / PERIOD_LENGTH;
 		//calculate which image (aka 'frame') of the sprite animation should be shown out of the cycle of images
 		int image = (int) (period % IMAGES_IN_CYCLE);
+
 		//calculate index into array of all images. this is an arbitrary value, depending on how the image files are ordered
-		int index = direction.value * IMAGES_IN_CYCLE + image;
-						
-		return images[index];
-				
+//		int index = direction.value * IMAGES_IN_CYCLE + image;						
+//		return images[index];
+
+		/* an alternate way of returning the images */
+		if (image == 0) {
+			switch (direction) {
+			case UP:
+				return up0;
+			case DOWN:
+				return down0;
+			case LEFT:
+				return left0;
+			case RIGHT:
+				return right0;
+			}
+		} else {
+			switch (direction) {
+			case UP:
+				return up1;
+			case DOWN:
+				return down1;
+			case LEFT:
+				return left1;
+			case RIGHT:
+				return right1;
+			}
+		}
+		//code should never reach here; statement included to keep compiler happy
+		return null;
 	}
 	
 	//DISPLAYABLE
