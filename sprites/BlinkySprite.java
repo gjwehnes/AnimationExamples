@@ -4,6 +4,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/*
+ * This class is an example of how to create an animation by alternating the image returned by the getImage() accessor
+ * The sprite has a total of eight images - four directions x 2 frames (in the animation sense). The images are loaded
+ * in the constructor, and the correct image is then calculated based on the sprite's movement and time elapsed
+ */
 public class BlinkySprite implements DisplayableSprite {
 
 	private static final double VELOCITY = 200;
@@ -12,10 +17,15 @@ public class BlinkySprite implements DisplayableSprite {
 	private static final int PERIOD_LENGTH = 200;
 	private static final int IMAGES_IN_CYCLE = 2;
 
+	/*
+	 * images are stored in an array... this usually corresponds to the numbering of the images
+	 * from the source (e.g. a sprite sheet, or the frames in an animated GIF)
+	 */
 	private static Image[] images;
 	/* 
 	 * an alternate way of storing the images. if the sprite is simple and only has
-	 * a few images, you may want to create explicit pointers to each image*/
+	 * a few images, you may want to create explicit pointers to each image
+	 */
 	private static Image left0;
 	private static Image right0;
 	private static Image up0;
@@ -35,8 +45,10 @@ public class BlinkySprite implements DisplayableSprite {
 
 	private Direction direction = Direction.UP;
 	
-	//an example of an enumeration, which is a series of constants in a list. this restricts the potential values of a variable
-	//declared with that type to only those values within the set, thereby promoting both code safety and readability
+	/*
+	 * an example of an enumeration, which is a series of constants in a list. this restricts the potential values of a variable
+	 * declared with that type to only those values within the set, thereby promoting both code safety and readability
+	 */
 	private enum Direction { DOWN(0), LEFT(1), UP(2), RIGHT(3);
 		private int value = 0;
 		private Direction(int value) {
@@ -65,7 +77,7 @@ public class BlinkySprite implements DisplayableSprite {
 			}		
 		}
 
-		/* an alternate way of storing the images */
+		/* use explicit instance variables for readability */
 		down0 = images[0];
 		down1= images[1];
 		left0 = images[2];
@@ -78,17 +90,15 @@ public class BlinkySprite implements DisplayableSprite {
 	}
 
 	public Image getImage() {
-				
-		//calculate how many periods of 200 milliseconds have elapsed since this sprite was instantiated?
+		/*
+		 * Calculation for which image to display
+		 * 1. calculate how many periods of time have elapsed since this sprite was instantiated?
+		 * 2. calculate which image (aka 'frame') of the sprite animation should be shown out of the cycle of images
+		 * 3. use some conditional logic to determine the right image for the current direction
+		 */
 		long period = elapsedTime / PERIOD_LENGTH;
-		//calculate which image (aka 'frame') of the sprite animation should be shown out of the cycle of images
 		int image = (int) (period % IMAGES_IN_CYCLE);
 
-		//calculate index into array of all images. this is an arbitrary value, depending on how the image files are ordered
-//		int index = direction.value * IMAGES_IN_CYCLE + image;						
-//		return images[index];
-
-		/* an alternate way of returning the images */
 		if (image == 0) {
 			switch (direction) {
 			case UP:

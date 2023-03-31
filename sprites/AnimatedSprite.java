@@ -9,6 +9,11 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+/*
+ * This class is an example of how to create an animation by iterating through a sequence of images that were
+ * generated at design time, and which represnt the frames of an animation. In this case, an animated GIF was
+ * deconstructed into individual images using online tools.
+ */
 public class AnimatedSprite implements DisplayableSprite {
 	
 	private int currentFrame = 0;
@@ -37,6 +42,12 @@ public class AnimatedSprite implements DisplayableSprite {
 		this.milliSecondsPerFrame = 1000 / framesPerSecond;
 		long startTime = System.currentTimeMillis();
 		
+		/*
+		 * Loading of the images into an array. The image files are named in sequence by the online tool that split
+		 * the animated GIF, and String formatting is used to re-create the correct file name. Note the use of
+		 * a static array to store the images... this ensures that only a single copy of each rotated image is
+		 * stored, even if there are multiple instances of this sprite.
+		 */
 		if (framesLoaded == false) {
 			for (int frame = 0; frame < FRAMES; frame++) {
 				String filename = "res/animated-earth/frame_" + String.format("%03d", frame) + "_delay-0.04s.gif";
@@ -107,6 +118,12 @@ public class AnimatedSprite implements DisplayableSprite {
 	
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 		
+		/*
+		 * Calculation for which image to display
+		 * 1. calculate how many periods of time have elapsed since this sprite was instantiated?
+		 * 2. calculate which image (aka 'frame') of the sprite animation should be shown out of the cycle of images
+		 */
+
 		elapsedTime += actual_delta_time;
 		long elapsedFrames = (long) (elapsedTime / milliSecondsPerFrame);
 		currentFrame = (int) (elapsedFrames % FRAMES);
