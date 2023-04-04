@@ -1,8 +1,14 @@
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+
+/*
+ * This class is an example of how to implement collision detection and bouncing for multiple sprites.
+ * Refer to the update() method for a detailed explanation.
+ */
 
 public class BouncingSprite implements DisplayableSprite {
 
@@ -25,6 +31,7 @@ public class BouncingSprite implements DisplayableSprite {
 	//required for advanced collision detection
 	private CollisionDetection collisionDetection;
 	private VirtualSprite virtual = new VirtualSprite();
+	ArrayList<Class> collisionTargetTypes = new ArrayList<Class>();
 
 	public BouncingSprite(double centerX, double centerY, double velocityX, double velocityY) {
 
@@ -32,7 +39,18 @@ public class BouncingSprite implements DisplayableSprite {
 		this.centerX = centerX;
 		this.centerY = centerY;	
 
+		/*
+		 * Instantiation of the CollisionDetection object. As this sprite uses the calculate2DBounce method, it needs to set certain
+		 * characteristics
+		 */
 		collisionDetection = new CollisionDetection();
+		collisionTargetTypes.add(BarrierSprite.class);
+		collisionTargetTypes.add(BouncingSprite.class);
+		collisionTargetTypes.add(PinballSprite.class);
+		collisionTargetTypes.add(JumpingSprite.class);
+		collisionDetection.setCollisionTargetTypes(collisionTargetTypes);
+		collisionDetection.setBounceFactorX(1);
+		collisionDetection.setBounceFactorY(1);
 
 		this.velocityX = velocityX;
 		this.velocityY = velocityY;
@@ -48,7 +66,7 @@ public class BouncingSprite implements DisplayableSprite {
 
 		this.height = HEIGHT;
 		this.width = WIDTH;
-
+		
 	}
 
 	//DISPLAYABLE
@@ -135,9 +153,28 @@ public class BouncingSprite implements DisplayableSprite {
 	
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 		
-		//bouncing sprites do not just check for collision with other sprites, but also calculate their rebound
-		//velocity if they do collide. note the use of a separate class that provides both this rebound calculation
-		//and the regular motion
+		/*
+		 * If this sprite is moving at a given velocity and collides with another sprite, it may be desirable to
+		 * have this sprite (and/or the other sprite) 'bounce'. That is, the velocities should be adjusted so that
+		 * the sprites' momentum is preserved (i.e act in accordance with Newtonian physics)
+		 * 
+		 * The problem is further complicated by the potential for two or more collisions to occur in one update. Consider
+		 * throwing a tennis ball at the bottom edge of a wall. The ball will collide with the wall, but may also at nearly
+		 * the same time collide with the floor. How does the velocity of the ball change?
+		 * 
+		 * The CollisionDetection class has a non-static method that attempts to solve this calculation. It is a rather complicated
+		 * piece of code but has been refined over the years it works reasonably well. Note the use of several parameters and mutators
+		 * that control the bounces
+		 *   - bounceFactor (set in constructor): the momentum preserved is modified by this factor every time a collision occurs. A factor
+		 *   of 1 means that no momentum is lost; a factor of 0.9 means that 90% of momentum is retained; factors greater than 1 mean
+		 *   that the sprite gains momentum
+		 * 	- collisionTargetTypes (created in constructor): the types of sprites that this sprite will bounce with. If null, all sprites
+		 *  will be targets. Note that the method in the CollisionDetection is overloaded.
+		 *  -virtual: a blank sprite that contains the new location and velocity of this sprite after all collisions have been calculated. These
+		 *  values can then be used (or not) to adjust this sprite.	 
+		 */
+		
+		
 		collisionDetection.calculate2DBounce(virtual, this, universe.getSprites(), velocityX, velocityY, actual_delta_time);
 		this.centerX = virtual.getCenterX();
 		this.centerY = virtual.getCenterY();

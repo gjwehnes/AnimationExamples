@@ -4,18 +4,22 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/*
+ * This class is an example of how to implement gravity, friction, and jumping behaviour, in addition to bouncing.
+ * Refer to the update() method for a detailed explanation.
+ */
 public class JumpingSprite implements DisplayableSprite {
 
-	
-	//PIXELS PER SECOND PER SECOND
+	/*
+	 * The following constants control the specific physics of this sprite's movement. All velocity values represent pixels per second 
+	 * and all acceleration values represent pixes per second per second
+	 */
 	private final double ACCCELERATION_X = 300;
 	private final double ACCCELERATION_Y = 600;
 	private final double MAX_VELOCITY_X = 300;
 	private final double DEACCELERATION_X = 300;
 	private final double MINIMUM_X_VELOCITY = 1;
 	private final double INITIAL_JUMP_VELOCITY = 600;
-
-	private boolean isJumping = false;
 	
 	//required for advanced collision detection
 	private CollisionDetection collisionDetection;
@@ -27,8 +31,8 @@ public class JumpingSprite implements DisplayableSprite {
 	private double width = 50;
 	private double height = 50;
 	private boolean dispose = false;	
-	private double velocityX = 000;        	//PIXELS PER SECOND
-	private double velocityY = 0;          	//PIXELS PER SECOND
+	private double velocityX = 0;
+	private double velocityY = 0;         
 	
 	public JumpingSprite(double centerX, double centerY) {
 
@@ -36,8 +40,11 @@ public class JumpingSprite implements DisplayableSprite {
 		this.centerX = centerX;
 		this.centerY = centerY;		
 
+		/*
+		 * Instantiation of the CollisionDetection object. As this sprite uses the calculate2DBounce method, it needs to set certain
+		 * characteristics
+		 */
 		collisionDetection = new CollisionDetection();
-
 		//change behaviour of bounces, so that only 50% of energy is 'preserved' in horizontal bounce and 0% of energy is preserved in vertical bounce
 		collisionDetection.setBounceFactorX(0.5);
 		collisionDetection.setBounceFactorY(0);
@@ -107,56 +114,66 @@ public class JumpingSprite implements DisplayableSprite {
 
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 
-		//behaviour is dependant on whether the sprite is on the 'ground' or not. 
+		
 		boolean onGround = isOnGround(universe);
 
-		//design is to only allow change of x velocity while on ground
+		//while this sprite is not on the ground, keyboard controls are ignored
 		if (onGround) {
 
+			/*
+			 * The jumping behaviour is a 1-time subtraction of a constant amount of velocity in the y dimension. However, the
+			 * sprite is designed to only be able to jump when it is on the ground. Note the function which determines this state.
+			 */
 			if (keyboard.keyDown(32)) {
-				isJumping = true;
 				this.velocityY -= INITIAL_JUMP_VELOCITY;
 				onGround = false;
 			}
-			// RIGHT
+			// RIGHT ARROW
 			if (keyboard.keyDown(39)) {
-				//velocityX will increase by a constant amount, up to a maximum
+				/*
+				 * The horizontal acceleration behaviour is continuous addition of an acceleration based on time elapsed. The x velocity
+				 * will thus increase if the right arrow key is pressed, until it reaches a maximum; vice versa for the left arrow key
+				 */
 				velocityX += actual_delta_time * 0.001 * ACCCELERATION_X;
 				if (velocityX > MAX_VELOCITY_X) {
 					velocityX = MAX_VELOCITY_X;
 				}
 			}
-			// LEFT
+			// LEFT ARROW
 			else if (keyboard.keyDown(37)) {
-				//velocityX will decrease by a constant amount, down to a minimum
 				velocityX -= actual_delta_time * 0.001 * ACCCELERATION_X;
 				if (velocityX < - MAX_VELOCITY_X) {
 					velocityX = - MAX_VELOCITY_X;
 				}
 			}
 			else {
-				//if not moving left or right, then velocity will deaccelerate
-				//note the use of a practical limit to zero the movement; otherwise, velocity would never be exactly zero
+				/*
+				 * The sliding behaviour is continuous application of a 'friction' factor to the x velocity when the sprite is not being
+				 * accelerated to the left or right. The x velocity will thus decrease until it reaches a minimum, at which point it is set
+				 * to zero
+				 */
 				if (Math.abs(this.velocityX) > MINIMUM_X_VELOCITY) {
 					this.velocityX -= actual_delta_time * 0.001 *  DEACCELERATION_X * Math.signum(this.velocityX);
 				}
 				else {
 					this.velocityX = 0;
 				}
-//				this.velocityX = this.velocityX * FRICTION_FACTOR_X;
 			}
 		}
-		else {
-			
-		}
 		
-		//sprite will use 2D bounce calculation; note that this will include all sprites in the universe, not just BarrierSprites
+		/*
+		 * After this sprite's velocity has been calculated, use the 2D bounce method to handle collission detection. 
+		 */		
 		collisionDetection.calculate2DBounce(virtual, this, universe.getSprites(), velocityX, velocityY, actual_delta_time);
 		this.centerX = virtual.getCenterX();
 		this.centerY = virtual.getCenterY();
 		this.velocityX = virtual.getVelocityX();
 		this.velocityY = virtual.getVelocityY();
 
+		/*
+		 * Gravity is simulated by the application of a constant acceleration in the y dimension (remember that the y dimension increases
+		 * towards the bottom, so gravity is a positive constant.
+		 */		
 		if (onGround == true) {
 			this.velocityY = 0;
 		} else {
@@ -168,16 +185,19 @@ public class JumpingSprite implements DisplayableSprite {
 	private boolean isOnGround(Universe universe) {
 		boolean onGround = false;
 		for (DisplayableSprite sprite: universe.getSprites()) {
-			//does the bottom of this sprite touch the top of another sprite?
-			boolean bottomColiding = Math.abs(this.getMaxY() - sprite.getMinY()) < 5;
-			//is this sprite at least partially overlapping another sprite in the x dimension?
-			boolean toRight = this.getMinX() > sprite.getMaxX();
-			boolean toLeft = this.getMaxX() < sprite.getMinX();
-			boolean withinRange = (toRight == false) && (toLeft == false);
-			
-			if (bottomColiding && withinRange) {
-				onGround = true;
-				break;
+			if (sprite instanceof BarrierSprite) {
+				//does the bottom of this sprite touch the top of another sprite?
+				boolean bottomColiding = Math.abs(this.getMaxY() - sprite.getMinY()) < 5;
+				//is this sprite at least partially overlapping this other sprite in the x dimension? If not, then this sprite is simply
+				//at the same vertical level, but not over top.
+				boolean toRight = this.getMinX() > sprite.getMaxX();
+				boolean toLeft = this.getMaxX() < sprite.getMinX();
+				boolean withinRange = (toRight == false) && (toLeft == false);
+				
+				if (bottomColiding && withinRange) {
+					onGround = true;
+					break;
+				}
 			}
 		}
 		return onGround;

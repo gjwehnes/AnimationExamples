@@ -4,6 +4,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/*
+ * This class creates a sprite that is static (does not move or change dimensions) and is visually not rectangular.
+ * The image used has a transparency layer, and even though the bounds of this sprite are defined as a rectangle by
+ * minX, minY, maxX, and maxY, the intended bound is the circumference of the pinball.
+ */
 public class PinballSprite implements DisplayableSprite {
 
 	private static Image image;	
@@ -127,18 +132,9 @@ public class PinballSprite implements DisplayableSprite {
 
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 		
-		//bouncing sprites do not just check for collision with other sprites, but also calculate their rebound
-		//velocity if they do collide. note the use of a separate class that provides both this rebound calculation
-		//and the regular motion
-//		collisionDetection.calculate2DBounce(bounce, this, universe.getSprites(), velocityX, velocityY, actual_delta_time);
-//		this.centerX = bounce.newX + (width / 2);
-//		this.centerY = bounce.newY + (width / 2);
-//		this.velocityX = bounce.newVelocityX;
-//		this.velocityY = bounce.newVelocityY;			
-//
-//		this.velocityX = this.velocityX + accelerationX * 0.001 * actual_delta_time;
-//		this.velocityY = this.velocityY + accelerationY * 0.001 * actual_delta_time;
-//	
+	/*
+	 * This sprite is static, and does not change its location nor bounds
+	 */
 	}
 
 }
