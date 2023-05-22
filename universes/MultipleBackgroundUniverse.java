@@ -118,9 +118,6 @@ public class MultipleBackgroundUniverse implements Universe {
 		this.skyBackground.setShiftX((player1.getCenterX() * 1));
 		this.mountainBackground.setShiftX((player1.getCenterX() * 0.85));
 		this.forestBackground.setShiftX((player1.getCenterX() * 0.5));
-
-		System.out.println(String.format("player1X: %5.2f; sky: %5.2f; mountain: %5.2f; forest: %5.2f", player1.getCenterX(), skyBackground.getShiftX(), mountainBackground.getShiftX(), forestBackground.getShiftX()));
-		
 		
 	}
 
