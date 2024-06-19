@@ -7,37 +7,43 @@ public class ExamplesAnimation implements Animation {
 	@Override
 	public Universe switchUniverse(Object event) {
 
-		universeCount++;
+		String type;
+		try {
+			type = event.toString();
+		} catch (Exception e) {
+			type = "";
+		}
+								
 		
-		if (universeCount == 1) {
+		if (type.equals(SimpleSpriteUniverse.class.toString())) {
 			this.current = new SimpleSpriteUniverse();
 		}
-		else if (universeCount == 2) {
+		else if (type.equals(CollidingSpritesUniverse.class.toString())) {
 			this.current = new CollidingSpritesUniverse();
 		}
-		else if (universeCount == 3) {
+		else if (type.equals(JumpingSpriteUniverse.class.toString())) {
 			this.current = new JumpingSpriteUniverse();
 		}
-		else if (universeCount == 4) {
+		else if (type.equals(AnimatedSpritesUniverse.class.toString())) {
 			this.current = new AnimatedSpritesUniverse();
 		}
-		else if (universeCount == 5) {
+		else if (type.equals(SateliteSpriteUniverse.class.toString())) {
 			this.current = new SateliteSpriteUniverse();
 		}				
-		else if (universeCount == 6) {
+		else if (type.equals(PatternedUniverse.class.toString())) {
 			this.current = new PatternedUniverse();
 		}
-		else if (universeCount == 7) {
+		else if (type.equals(MappedUniverse.class.toString())) {
 			this.current = new MappedUniverse();
 		}
-		else if (universeCount == 8) {
+		else if (type.equals(MultipleBackgroundUniverse.class.toString())) {
 			this.current = new MultipleBackgroundUniverse();
 		}
-		else if (universeCount == 9) {
-			return new StarfieldUniverse();
+		else if (type.equals(StarfieldUniverse.class.toString())) {
+			this.current = new StarfieldUniverse();
 		}
 		else {
-			this.current = null;
+			this.current = new SimpleSpriteUniverse();	
 		}
 		
 		return this.current;
