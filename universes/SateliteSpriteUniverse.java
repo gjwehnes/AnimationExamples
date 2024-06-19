@@ -4,13 +4,17 @@ import java.util.ArrayList;
 public class SateliteSpriteUniverse implements Universe {
 
 	private boolean complete = false;	
-	private Background background = null;	
 	private DisplayableSprite player1 = null;
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
 	ArrayList<DisplayableSprite> disposedSprites = new ArrayList<DisplayableSprite>();
+	private ArrayList<Background> backgrounds = null;
 	
 	public SateliteSpriteUniverse () {
-			
+
+		Background background = new SingleTileBackground("res/backgrounds/starfield.jpg");
+		backgrounds =new ArrayList<Background>();
+		backgrounds.add(background);
+		
 		SateliteSprite jupiter = new SateliteSprite(0, 0, 0, 0, 1000000, 100,false, "res/satelites/jupiter.png");
 		this.player1 = jupiter;		
 		SateliteSprite io = new SateliteSprite(-100,0, 0, 350 ,  1000, 36, false, "res/satelites/io.png");
@@ -55,7 +59,7 @@ public class SateliteSpriteUniverse implements Universe {
 	}
 
 	public ArrayList<Background> getBackgrounds() {
-		return null;
+		return backgrounds;
 	}	
 
 	public DisplayableSprite getPlayer1() {
