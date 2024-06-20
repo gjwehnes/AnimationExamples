@@ -3,7 +3,13 @@ public class ExamplesAnimation implements Animation {
 
 	private int universeCount = 0;
 	private Universe current = null;
+	private boolean universeSwitched = false;
+	private boolean animationComplete = false;
 
+	public ExamplesAnimation() {
+		switchUniverse(SimpleSpriteUniverse.class.toString());
+	}
+	
 	@Override
 	public Universe switchUniverse(Object event) {
 
@@ -46,6 +52,7 @@ public class ExamplesAnimation implements Animation {
 			this.current = new SimpleSpriteUniverse();	
 		}
 		
+		universeSwitched = true;
 		return this.current;
 
 	}
@@ -54,5 +61,28 @@ public class ExamplesAnimation implements Animation {
 		return this.current;
 	}
 
+	@Override
+	public boolean getUniverseSwitched() {
+		return universeSwitched;
+	}
+
+	@Override
+	public void acknowledgeUniverseSwitched() {
+		this.universeSwitched = false;		
+	}
+
+	@Override
+	public boolean isComplete() {
+		return animationComplete;
+	}
+
+	@Override
+	public void setComplete(boolean complete) {
+		this.animationComplete = true;		
+	}
+
+	@Override
+	public void update(KeyboardInput keyboard, long actual_delta_time) {
+	}
 	
 }
