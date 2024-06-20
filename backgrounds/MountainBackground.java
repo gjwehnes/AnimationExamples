@@ -97,7 +97,12 @@ public class MountainBackground implements Background {
 	public void setShiftY(double shiftY) {
 		this.shiftY = shiftY;		
 	}
-	
+
+	@Override
+	public void update(Universe universe, long actual_delta_time) {
+		//ignore
+	}
+		
 }
 
 

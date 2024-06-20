@@ -84,11 +84,13 @@ public class SimpleSprite implements DisplayableSprite {
 	}
 
 
-	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
+	public void update(Universe universe, long actual_delta_time) {
 		
 		double velocityX = 0;
 		double velocityY = 0;
 		
+		KeyboardInput keyboard = KeyboardInput.getKeyboard();
+
 		//set velocity based on current state of the keyboard
 		
 		//LEFT ARROW

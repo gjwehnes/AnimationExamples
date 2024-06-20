@@ -110,7 +110,7 @@ public class RotatingSprite implements DisplayableSprite {
 		this.dispose = dispose;
 	}
 
-	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
+	public void update(Universe universe, long actual_delta_time) {
 
 		/*
 		 * Calculation for which image to display: an instance variable is maintained with the current

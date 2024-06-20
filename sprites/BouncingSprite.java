@@ -151,7 +151,7 @@ public class BouncingSprite implements DisplayableSprite {
 		this.velocityY = velocityY;
 	}
 	
-	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
+	public void update(Universe universe, long actual_delta_time) {
 		
 		/*
 		 * If this sprite is moving at a given velocity and collides with another sprite, it may be desirable to

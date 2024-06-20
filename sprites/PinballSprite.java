@@ -130,7 +130,7 @@ public class PinballSprite implements DisplayableSprite {
 		this.velocityY = velocityY;
 	}
 
-	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
+	public void update(Universe universe, long actual_delta_time) {
 		
 	/*
 	 * This sprite is static, and does not change its location nor bounds

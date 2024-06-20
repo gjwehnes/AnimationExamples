@@ -105,7 +105,7 @@ public class BulletSprite implements DisplayableSprite {
 	}
 
 
-	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
+	public void update(Universe universe, long actual_delta_time) {
 		
 	    double movement_x = (this.velocityX * actual_delta_time * 0.001);
 	    double movement_y = (this.velocityY * actual_delta_time * 0.001);

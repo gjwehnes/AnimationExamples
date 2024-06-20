@@ -125,8 +125,10 @@ public class CollidingSprite implements DisplayableSprite {
 	 * calculated new location.
 	 */
 	
-	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
+	public void update(Universe universe, long actual_delta_time) {
 		
+		KeyboardInput keyboard = KeyboardInput.getKeyboard();
+
 		/*
 		 * This sprite controls its own velocity by reading keyboard input		
 		 */

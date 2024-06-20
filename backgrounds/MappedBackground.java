@@ -163,4 +163,9 @@ public class MappedBackground implements Background {
 		//ignore
 	}
 	
+	@Override
+	public void update(Universe universe, long actual_delta_time) {
+		//ignore
+	}
+		
 }

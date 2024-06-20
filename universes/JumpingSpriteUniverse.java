@@ -75,15 +75,11 @@ public class JumpingSpriteUniverse implements Universe {
 		return false;
 	}		
 	
-	public void update(KeyboardInput keyboard, long actual_delta_time) {
+	public void update(Animation animation, long actual_delta_time) {
 
-		if (keyboard.keyDownOnce(27)) {
-			complete = true;
-		}
-		
 		for (int i = 0; i < sprites.size(); i++) {
 			DisplayableSprite sprite = sprites.get(i);
-			sprite.update(this, keyboard, actual_delta_time);
+			sprite.update(this, actual_delta_time);
     	} 
 	}
 	

@@ -105,7 +105,9 @@ public class SpaceShipSprite implements DisplayableSprite {
 	}
 
 
-	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
+	public void update(Universe universe, long actual_delta_time) {
+		
+		KeyboardInput keyboard = KeyboardInput.getKeyboard();
 		
 		//LEFT	
 		if (keyboard.keyDown(37)) {

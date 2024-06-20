@@ -50,7 +50,7 @@ public class BlankUniverse implements Universe {
 	}
 
 	@Override
-	public void update(KeyboardInput keyboard, long actual_delta_time) {
+	public void update(Animation animation, long actual_delta_time) {
 	}
 
 	public String toString() {

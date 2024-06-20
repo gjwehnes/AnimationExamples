@@ -105,7 +105,7 @@ public class SateliteSprite implements DisplayableSprite {
 	}
 
 
-	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
+	public void update(Universe universe, long actual_delta_time) {
 
 		//calculate new position assuming there are no changes in direction
 	    double movement_x = (this.velocityX * actual_delta_time * 0.001);

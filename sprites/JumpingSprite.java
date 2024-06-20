@@ -112,9 +112,9 @@ public class JumpingSprite implements DisplayableSprite {
 	}
 
 
-	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
+	public void update(Universe universe, long actual_delta_time) {
 
-		
+		KeyboardInput keyboard = KeyboardInput.getKeyboard();		
 		boolean onGround = isOnGround(universe);
 
 		//while this sprite is not on the ground, keyboard controls are ignored
