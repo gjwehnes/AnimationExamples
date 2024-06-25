@@ -18,7 +18,8 @@ public class MappedBackground implements Background {
     private Image water;
     private Image grass;
     private int maxCols = 0;
-    private int maxRows = 0;    
+    private int maxRows = 0;
+    private PortalSprite exitSprite;
 
 	private int map[][] = new int[][] { 
 		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -60,6 +61,12 @@ public class MappedBackground implements Background {
     	}
     	maxRows = map.length - 1;
     	maxCols = map[0].length - 1;
+    	
+    	exitSprite = new PortalSprite(this.getMinX() + MappedBackground.TILE_WIDTH * 1, 
+    			this.getMaxY() - MappedBackground.TILE_HEIGHT * 3, 
+    			50,
+    			true);
+    	    	
     }
 	
 	public Tile getTile(int col, int row) {
@@ -131,18 +138,6 @@ public class MappedBackground implements Background {
 		}
 	}
 	
-	public ArrayList<DisplayableSprite> getBarriers() {
-		ArrayList<DisplayableSprite> barriers = new ArrayList<DisplayableSprite>();
-		for (int col = 0; col < map[0].length; col++) {
-			for (int row = 0; row < map.length; row++) {
-				if (map[row][col] == 1) {
-					barriers.add(new BarrierSprite(col * TILE_WIDTH, row * TILE_HEIGHT, (col + 1) * TILE_WIDTH, (row + 1) * TILE_HEIGHT, false));
-				}
-			}
-		}
-		return barriers;
-	}
-
 	@Override
 	public double getShiftX() {
 		return 0;
@@ -167,5 +162,47 @@ public class MappedBackground implements Background {
 	public void update(Universe universe, long actual_delta_time) {
 		//ignore
 	}
+	
+	// the following method provides a convenient way to add barriers corresponding to certain types of background tiles
+	// it means that this data does not need to be duplicated elsewhere, which is best practice
+	public ArrayList<DisplayableSprite> getBarriers() {
+		ArrayList<DisplayableSprite> barriers = new ArrayList<DisplayableSprite>();
+		for (int col = 0; col < map[0].length; col++) {
+			for (int row = 0; row < map.length; row++) {
+				if (map[row][col] == 1) {
+					barriers.add(new BarrierSprite(col * TILE_WIDTH, row * TILE_HEIGHT, (col + 1) * TILE_WIDTH, (row + 1) * TILE_HEIGHT, false));
+				}
+			}
+		}
+		return barriers;
+	}
+
+	// Similar to providing the barriers in the background, this method provides other sprites that are located within the background.
+	// Even though sprites are drawn separately from backgrounds, the (initial) location of the sprite is tightly bound to the design
+	// of the background, and thus again it is best practice to instantiate it here
+	public PortalSprite getExit() {
+		return this.exitSprite;
+	}
+
+
+	// the following four methods are added so that a client of this background can know the bounds.
+	// note that these are not part of the interface, so they do not override, and they are only
+	// added to this class as there is a specific need
+	public double getMinX() {
+		return 0;
+	}
+
+	public double getMaxX() {
+		return (map[0].length + 1) * TILE_WIDTH; 
+	}
+
+	public double getMinY() {
+		return 0;
+	}
+
+	public double getMaxY() {
+		return (map.length + 1) * TILE_HEIGHT; 
+	}
+	
 		
 }

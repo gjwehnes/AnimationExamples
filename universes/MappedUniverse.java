@@ -4,9 +4,10 @@ public class MappedUniverse implements Universe {
 
 	private boolean complete = false;
 	private ArrayList<Background> backgrounds = null;
-	private Background background = null;	
+	private MappedBackground background = null;	
 	private DisplayableSprite player1 = null;
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
+	private boolean inPortal = false;
 
 	public MappedUniverse () {
 
@@ -19,6 +20,8 @@ public class MappedUniverse implements Universe {
 		
 		sprites.add(player1);
 		sprites.addAll(barriers);
+		sprites.add(background.getExit());
+		
 		
 	}
 
@@ -69,7 +72,24 @@ public class MappedUniverse implements Universe {
 		for (int i = 0; i < sprites.size(); i++) {
 			DisplayableSprite sprite = sprites.get(i);
 			sprite.update(this, actual_delta_time);
-    	} 
+    	}
+		
+		// universe can do collision detection - in this case it makes sense, as the universe has references to the two sprites
+		// whose collision it needs to detect, and direct access to the parent animation
+		if (CollisionDetection.overlaps(player1, background.getExit())) {
+			// we do only want to detect if the player moved into the portal... if they
+			// were already there, then force them to completely exit first...
+			// this prevents universes from switching continuously
+			if (inPortal == false) {
+				inPortal = true;
+				// you can switch to a different universe by invoking the transition function of the parent animation
+				animation.switchUniverse(PatternedUniverse.class.toString());
+			}
+		}
+		else {
+			inPortal = false;
+		}
+		
 	}
 
 	public String toString() {

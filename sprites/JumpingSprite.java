@@ -1,6 +1,7 @@
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -25,14 +26,14 @@ public class JumpingSprite implements DisplayableSprite {
 	private CollisionDetection collisionDetection;
 	private VirtualSprite virtual = new VirtualSprite();
 
-	private static Image image;
+	private static Image image;	
 	private double centerX = 0;
 	private double centerY = 0;
 	private double width = 50;
 	private double height = 50;
 	private boolean dispose = false;	
 	private double velocityX = 0;
-	private double velocityY = 0;         
+	private double velocityY = 0;
 	
 	public JumpingSprite(double centerX, double centerY) {
 
@@ -45,9 +46,16 @@ public class JumpingSprite implements DisplayableSprite {
 		 * characteristics
 		 */
 		collisionDetection = new CollisionDetection();
-		//change behaviour of bounces, so that only 50% of energy is 'preserved' in horizontal bounce and 0% of energy is preserved in vertical bounce
+		// change behaviour of bounces, so that only 50% of energy is 'preserved' in horizontal bounce and 0% of energy is preserved in vertical bounce
 		collisionDetection.setBounceFactorX(0.5);
 		collisionDetection.setBounceFactorY(0);
+		// create a list of types for which the CollisionDetection object will calculate bounces. 
+		// Only those types added to the list will collide; any other type will not;
+		// passing a null list implies that any other type will collide
+		ArrayList<Class> collidingTypes = new ArrayList<Class>();
+		collidingTypes.add(BouncingSprite.class);
+		collidingTypes.add(BarrierSprite.class);		
+		collisionDetection.setCollisionTargetTypes(collidingTypes);
 		
 		if (image == null) {
 			try {
@@ -162,7 +170,8 @@ public class JumpingSprite implements DisplayableSprite {
 		}
 		
 		/*
-		 * After this sprite's velocity has been calculated, use the 2D bounce method to handle collission detection. 
+		 * After this sprite's velocity has been calculated, use the 2D bounce method to handle collision detection.
+		 * Note the use of a list of sprite types that will cause collisions. See the constructor.
 		 */		
 		collisionDetection.calculate2DBounce(virtual, this, universe.getSprites(), velocityX, velocityY, actual_delta_time);
 		this.centerX = virtual.getCenterX();
@@ -202,5 +211,33 @@ public class JumpingSprite implements DisplayableSprite {
 		}
 		return onGround;
 	}
-		
+
+	/* 
+	 * The following getters and setters are provided to allow the setting of
+	 * movement by another object. See the JumpingSpriteUniverse.transportPlayer()
+	 * method for an example
+	 */
+	protected double getVelocityX() {
+		return velocityX;
+	}
+
+	protected void setVelocityX(double velocityX) {
+		this.velocityX = velocityX;
+	}
+
+	protected double getVelocityY() {
+		return velocityY;
+	}
+
+	protected void setVelocityY(double velocityY) {
+		this.velocityY = velocityY;
+	}
+
+	protected void setCenterX(double centerX) {
+		this.centerX = centerX;
+	}
+
+	protected void setCenterY(double centerY) {
+		this.centerY = centerY;
+	}
 }
