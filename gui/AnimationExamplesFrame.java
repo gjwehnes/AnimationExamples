@@ -49,41 +49,50 @@ public class AnimationExamplesFrame extends AnimationFrame{
 	
 	private void cboUniverse_itemStateChanged(ItemEvent e) {
 	
-		if (this.cboUniverse.getSelectedIndex() == 0) {
-			this.animation.switchUniverse(SimpleSpriteUniverse.class.toString());		
+		/*
+		 * In Java Swing, you have to be very careful with events, as one
+		 * user action can trigger multiple events. In this case, changing
+		 * the value of a combobox with trigger both a DESELECTED and 
+		 * SELECTED event
+		 */
+		if (e.getStateChange() == ItemEvent.SELECTED) {
+					
+			if (this.cboUniverse.getSelectedIndex() == 0) {
+				this.animation.switchUniverse(SimpleSpriteUniverse.class.toString());		
+			}
+			else if (cboUniverse.getSelectedIndex() == 1) {
+				this.animation.switchUniverse(CollidingSpritesUniverse.class.toString());		
+			}
+			else if (cboUniverse.getSelectedIndex() == 2) {
+				this.animation.switchUniverse(JumpingSpriteUniverse.class.toString());		
+			}
+			else if (cboUniverse.getSelectedIndex() == 3) {
+				this.animation.switchUniverse(AnimatedSpritesUniverse.class.toString());		
+			}
+			else if (cboUniverse.getSelectedIndex() == 4) {
+				this.animation.switchUniverse(SateliteSpriteUniverse.class.toString());		
+			}
+			else if (cboUniverse.getSelectedIndex() == 5) {
+				this.animation.switchUniverse(PatternedUniverse.class.toString());		
+			}
+			else if (cboUniverse.getSelectedIndex() == 6) {
+				this.animation.switchUniverse(MappedUniverse.class.toString());		
+			}
+			else if (cboUniverse.getSelectedIndex() == 7) {
+				this.animation.switchUniverse(MultipleBackgroundUniverse.class.toString());		
+			}
+			else if (cboUniverse.getSelectedIndex() == 8) {
+				this.animation.switchUniverse(StarfieldUniverse.class.toString());		
+			}
+			else {			
+			}
+			
+			this.universe = animation.getCurrentUniverse();
+			this.sprites = universe.getSprites();
+			this.player1 = universe.getPlayer1();
+			this.backgrounds = universe.getBackgrounds();
+			this.scale = universe.getScale();
 		}
-		else if (cboUniverse.getSelectedIndex() == 1) {
-			this.animation.switchUniverse(CollidingSpritesUniverse.class.toString());		
-		}
-		else if (cboUniverse.getSelectedIndex() == 2) {
-			this.animation.switchUniverse(JumpingSpriteUniverse.class.toString());		
-		}
-		else if (cboUniverse.getSelectedIndex() == 3) {
-			this.animation.switchUniverse(AnimatedSpritesUniverse.class.toString());		
-		}
-		else if (cboUniverse.getSelectedIndex() == 4) {
-			this.animation.switchUniverse(SateliteSpriteUniverse.class.toString());		
-		}
-		else if (cboUniverse.getSelectedIndex() == 5) {
-			this.animation.switchUniverse(PatternedUniverse.class.toString());		
-		}
-		else if (cboUniverse.getSelectedIndex() == 6) {
-			this.animation.switchUniverse(MappedUniverse.class.toString());		
-		}
-		else if (cboUniverse.getSelectedIndex() == 7) {
-			this.animation.switchUniverse(MultipleBackgroundUniverse.class.toString());		
-		}
-		else if (cboUniverse.getSelectedIndex() == 8) {
-			this.animation.switchUniverse(StarfieldUniverse.class.toString());		
-		}
-		else {			
-		}
-		
-		this.universe = animation.getCurrentUniverse();
-		this.sprites = universe.getSprites();
-		this.player1 = universe.getPlayer1();
-		this.backgrounds = universe.getBackgrounds();
-		this.scale = universe.getScale();
 	}
 		
 }
