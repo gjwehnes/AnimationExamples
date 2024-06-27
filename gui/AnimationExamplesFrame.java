@@ -89,7 +89,6 @@ public class AnimationExamplesFrame extends AnimationFrame{
 			
 			this.universe = animation.getCurrentUniverse();
 			this.sprites = universe.getSprites();
-			this.player1 = universe.getPlayer1();
 			this.backgrounds = universe.getBackgrounds();
 			this.scale = universe.getScale();
 		}

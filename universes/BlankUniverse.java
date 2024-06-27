@@ -35,11 +35,6 @@ public class BlankUniverse implements Universe {
 	}
 
 	@Override
-	public DisplayableSprite getPlayer1() {
-		return null;
-	}
-
-	@Override
 	public ArrayList<DisplayableSprite> getSprites() {
 		return null;
 	}

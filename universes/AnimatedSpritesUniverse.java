@@ -48,10 +48,6 @@ public class AnimatedSpritesUniverse implements Universe {
 		return background;
 	}
 
-	public DisplayableSprite getPlayer1() {
-		return player1;
-	}
-
 	public ArrayList<DisplayableSprite> getSprites() {
 		return sprites;
 	}

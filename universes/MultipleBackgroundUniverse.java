@@ -73,10 +73,6 @@ public class MultipleBackgroundUniverse implements Universe {
 		complete = true;
 	}
 
-	public DisplayableSprite getPlayer1() {
-		return player1;
-	}
-
 	public ArrayList<DisplayableSprite> getSprites() {
 		return sprites;
 	}
