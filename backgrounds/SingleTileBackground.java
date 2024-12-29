@@ -6,6 +6,16 @@ import javax.imageio.ImageIO;
 
 public class SingleTileBackground implements Background {
 
+	/*
+	 * This class provides a generic repeating background with a sinbgle image. The image used
+	 * is a 'wallpaper', which means the right hand edge matches the left hand edge, and/or
+	 * the top edge matches the bottom edge. In other words, a tesselation!
+	 * 
+	 * Normally, the image that is used is larger than the screen, so that the repetition is
+	 * not obvious. However, the tile size is set based on the image, and a smaller tesselated image
+	 * (e.g. of a stone floor) can work equally well.
+	 */
+	
     private Image starfield;
     private int backgroundWidth = 0;
     private int backgroundHeight = 0;
@@ -23,8 +33,10 @@ public class SingleTileBackground implements Background {
     }
 	
 	public Tile getTile(int col, int row) {
-		//row is an index of tiles, with 0 being the at the origin
-		//col is an index of tiles, with 0 being the at the origin
+		/*
+		 * col and row represent the index in the x and y dimension of an infinite 2D grid of tiles
+		 * all using the same image
+		 */
 		int x = (col * backgroundWidth);
 		int y = (row * backgroundHeight);
 		Tile newTile = null;
@@ -33,6 +45,11 @@ public class SingleTileBackground implements Background {
 
 		return newTile;
 	}
+
+	/*
+	 * columns and row are indexed starting at 0, and increase to the right and down respectively. Negative 
+	 * indexes can also exist, to the left and/or above of the origin.
+	 */
 	
 	public int getCol(double x) {
 		//which col is x sitting at?

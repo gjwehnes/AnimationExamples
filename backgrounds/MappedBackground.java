@@ -9,6 +9,15 @@ import javax.imageio.ImageIO;
 
 public class MappedBackground implements Background {
 
+	/*
+	 * An example of creating a background using various tiles and a two-dimensional array
+	 * that stores the pattern. This allows the quick creation of, for example, levels of a
+	 * maze game at design time.
+	 * 
+	 * Note also the method getBarriers, which creates a list of barriers at run time. This
+	 * allows the barriers to always match the maze 
+	 */
+	
     protected static int TILE_WIDTH = 50;
     protected static int TILE_HEIGHT = 50;
 
@@ -21,34 +30,64 @@ public class MappedBackground implements Background {
     private int maxRows = 0;
     private PortalSprite exitSprite;
 
-	private int map[][] = new int[][] { 
-		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-		{1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,3,3,3,3,3,2,2},
-		{1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,3,3,3,3,3,2,2},
-		{1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,1,3,3,3,3,3,2,2},
-		{1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,1,3,3,3,3,3,2,2},
-		{1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,1,3,3,3,3,3,2,2},
-		{1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,1,3,3,3,3,3,4,4},
-		{1,0,0,0,0,1,1,1,1,1,0,0,1,0,0,1,3,3,3,3,3,4,4},
-		{1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,3,3,3,3,3,2,2},
-		{1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,3,3,3,3,3,2,2},
-		{1,1,1,1,1,1,1,1,1,1,0,0,1,0,0,1,3,3,3,3,3,2,2},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,3,3,3,3,2,2},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,3,3,3,3,2,2},
-		{1,0,0,0,0,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2},
-		{1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2},
-		{1,0,0,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,2,2},
-		{1,0,0,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,2,2},
-		{1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2},
-		{1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2},
-		{1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2},
-		{1,0,0,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,2,2},
-		{1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2},
-		{1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2},
-		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2}
-	};
-    
+	private int map[][] = null; 
+	 	
     public MappedBackground() {
+
+    	/*
+    	 * The code below attempts to read a map from a comma-separated (CSV) file and
+    	 * places it into the 2D integer array.
+    	 * 
+    	 */
+    	
+		int[][] level1 = CSVReader.importFromCSV("res/mapped-background/MappedBackground.csv");
+		if (level1 != null) {
+			/* Have a look at the referenced CSV file. By itself it is difficult to read, but
+			 * there is also an Excel file (i.e. a spreadsheet) in the same subfolder. A spreadsheet
+			 * is a natural way to design a complex map. From Excel (or Sheets) you can export
+			 * (or save-as) a spreadsheet as a CSV file. Note the colour coding and the modified
+			 * column widths to make the map easy to read and edit. 
+			 */
+			map = level1;
+		}
+		else {
+	    	/* If somehow the method fails, the map is instead hard-coded. 
+			 * This is included here only to demonstrate that it is possible, and that in many cases
+			 * it makes more sense to keep your map 'contained' within the class than implements it.
+			 * However, as the # of rows and columns get large, the map becomes difficult 
+			 * to read and edit 
+	    	 */			
+			map = new int[][] {
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,3,3,3,3,3,2,2},
+				{1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,3,3,3,3,3,2,2},
+				{1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,1,3,3,3,3,3,2,2},
+				{1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,1,3,3,3,3,3,2,2},
+				{1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,1,3,3,3,3,3,2,2},
+				{1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,1,3,3,3,3,3,4,4},
+				{1,0,0,0,0,1,1,1,1,1,0,0,1,0,0,1,3,3,3,3,3,4,4},
+				{1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,3,3,3,3,3,2,2},
+				{1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,3,3,3,3,3,2,2},
+				{1,1,1,1,1,1,1,1,1,1,0,0,1,0,0,1,3,3,3,3,3,2,2},
+				{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,3,3,3,3,2,2},
+				{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,3,3,3,3,2,2},
+				{1,0,0,0,0,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2},
+				{1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2},
+				{1,0,0,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,2,2},
+				{1,0,0,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,2,2},
+				{1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2},
+				{1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2},
+				{1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2},
+				{1,0,0,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,2,2},
+				{1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2},
+				{1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2}
+			};
+		}
+		
+		/*
+		 * Load the various types of tiles. Each of these images is a tesselation
+		 */
     	try {
     		this.wood = ImageIO.read(new File("res/backgrounds/map-tiles/wood_tile.jpg"));
     		this.stone = ImageIO.read(new File("res/backgrounds/map-tiles/stone_tile.jpg"));
@@ -73,7 +112,15 @@ public class MappedBackground implements Background {
 		
 		Image image = null;
 		
+		/*
+		 * The mapping between the 2D integer array and the image is done here. A client would normally first determine
+		 * which tile covers a given x/y coordinate using the getRow and getCol methods (below), which translate the
+		 * coordinates into columns/rows based on the tile width. Then, based on the row and col, a new Tile object
+		 * is instantiated with the correct bounds and the image corresponding to the map.
+		 */
+		
 		if (row < 0 || row > maxRows || col < 0 || col > maxCols) {
+			// a null image creates a transparent tile!
 			image = null;
 		}
 		else if (map[row][col] == 0) {

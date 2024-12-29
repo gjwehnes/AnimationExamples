@@ -6,6 +6,10 @@ import javax.imageio.ImageIO;
 
 public class AberhartBackground implements Background {
 
+	/*
+	 * An example of how you can create a patterned background using some basic math.
+	 */
+	
     private Image aberhart;
     private Image blank;
     private int backgroundWidth = 0;
@@ -25,12 +29,15 @@ public class AberhartBackground implements Background {
     }
 	
 	public Tile getTile(int col, int row) {
-		//row is an index of tiles, with 0 being the at the origin
-		//col is an index of tiles, with 0 being the at the origin
+
 		int x = (col * backgroundWidth);
 		int y = (row * backgroundHeight);
 		Tile newTile = null;
-		
+
+		/*
+		 * The code below creates a checkerboard pattern, but can be easily modified to create alternating
+		 * rows or coluns, or some other fanciful pattern.
+		 */
 		if (((col + row) % 2) == 0 ) {
 			newTile = new Tile(aberhart, x, y, backgroundWidth, backgroundHeight, false);
 		} else {
