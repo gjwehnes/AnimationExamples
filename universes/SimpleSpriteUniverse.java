@@ -89,11 +89,65 @@ public class SimpleSpriteUniverse implements Universe {
 			DisplayableSprite sprite = sprites.get(i);
 			sprite.update(this, actual_delta_time);
     	} 
-				
+
 	}
 
-	public String toString() {
-		return "SimpleUniverse";
+	private double calculateStandardAngle(double xA, double yA, double xB, double yB) {
+		
+		// An example of how to calculate angles in java that corresponds to the
+		// mathematical unit circle. This is somewhat complicated because
+		// the y dimension increases towards the bottom of the screen, the standard
+		// angle is reversed from the mathematical definition. 0 is still to the right,
+		// but positive angles indicate clockwise rotation. 90 is the bottom of the screen,
+		// 180 is the left, and 270 is the top.
+		// 
+		// Thus, quadrants are reversed. Top right is I, bottom right is II,
+		// bottom left is III, top left is IV
+
+		// As a further complication, methods in the Math class work with radians, which
+		// are not necessarily intuitive
+		
+		double x = xB - xA;
+		double y = yB - yA;
+		
+		// calculate tan ratio
+		double tan = y / x;
+		// calculate reference angle (thetaR)
+		// note the conversion from radians to degrees
+		// reference angle is always positive; the Math.abs method removes the sign.
+		double thetaR = Math.abs( Math.toDegrees(Math.atan(tan)));
+		
+		//based on the quadrant, reference angle will give us standard angle (theta)
+		double theta;
+
+		if (x >= 0 && y >= 0) {
+			//quadrant I
+			theta = thetaR;			
+		} else if (x < 0 && y >= 0) {
+			//quadrant II
+			theta = 180 - thetaR;		
+		} else if (x < 0 && y < 0) {
+			//quadrant III
+			theta = 180 + thetaR;		
+		} else {
+			//quadrant IV
+			theta = 360 - thetaR;		
+		}
+		
+		return theta;
+	}
+	
+	public String toString() {		
+		return String.format("mouseX: %3.2f; mouseY: %3.2f; standard angle: %5.1f; buttons: %s%s",
+				MouseInput.logicalX,
+				MouseInput.logicalY,
+				calculateStandardAngle(
+						this.player1.getCenterX(),
+						this.player1.getCenterY(),
+						MouseInput.logicalX,
+						MouseInput.logicalY),
+				MouseInput.leftButtonDown ? "X" : "-",
+				MouseInput.rightButtonDown ? "X" : "-");
 	}
 
 
