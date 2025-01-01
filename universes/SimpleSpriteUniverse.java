@@ -94,18 +94,20 @@ public class SimpleSpriteUniverse implements Universe {
 
 	private double calculateStandardAngle(double xA, double yA, double xB, double yB) {
 		
-		// An example of how to calculate angles in java that corresponds to the
-		// mathematical unit circle. This is somewhat complicated because
-		// the y dimension increases towards the bottom of the screen, the standard
+		// An example of how to calculate standard angles in java that corresponds to the
+		// mathematical definition. This is somewhat complicated because, opposite to a Cartesian grid
+		// the y dimension increases towards the bottom of the screen. Thus, our 'standard'
 		// angle is reversed from the mathematical definition. 0 is still to the right,
 		// but positive angles indicate clockwise rotation. 90 is the bottom of the screen,
-		// 180 is the left, and 270 is the top.
-		// 
+		// 180 is the left, and 270 is the top. That allows the sine, cosine, and tangent ratios
+		// still correctly correspond to the standard angle
+		
 		// Thus, quadrants are reversed. Top right is I, bottom right is II,
 		// bottom left is III, top left is IV
 
 		// As a further complication, methods in the Math class work with radians, which
-		// are not necessarily intuitive
+		// are not necessarily intuitive. So, the examples below convert to radians when
+		// necessary, but we store the angle in degrees.
 		
 		double x = xB - xA;
 		double y = yB - yA;
@@ -135,6 +137,12 @@ public class SimpleSpriteUniverse implements Universe {
 		}
 		
 		return theta;
+		
+		/*
+		 * Conversion from standard angle back to vectors (i.e. the corresponding x and distance)
+		 * using the sine and cosine function will still work correctly. See the SpaceshipSprite
+		 * for an example
+		 */
 	}
 	
 	public String toString() {		
