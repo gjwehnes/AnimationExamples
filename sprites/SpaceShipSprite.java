@@ -19,8 +19,9 @@ public class SpaceShipSprite implements DisplayableSprite {
 	private double reloadTime = 0;
 	private Image rotatedImage;
 
-	private double ACCELERATION = 400;          			//PIXELS PER SECOND PER SECOND 
-	private double ROTATION_SPEED = 180;	//degrees per second	
+	private final double ACCELERATION = 400;          			//PIXELS PER SECOND PER SECOND 
+	private final double ROTATION_SPEED = 180;	//degrees per second	
+	private final double BULLET_VELOCITY = 751;
 	private double currentAngle = 0;
 	private int currentImageAngle = 0;
 	
@@ -160,14 +161,25 @@ public class SpaceShipSprite implements DisplayableSprite {
 	public void shoot(Universe universe) {
 		
 		if (reloadTime <= 0) {
-			double currentVelocity = Math.sqrt((velocityX * velocityX) + (velocityY * velocityY));
-			double bulletVelocity = 750; // + currentVelocity;
-			double ratio = (bulletVelocity / currentVelocity);
-//			 = ratio * velocityX + velocityX;
-//			double bulletVelocityY = ratio * velocityY + velocityY;
+			/*
+			 * An example of how to convert a standard angle and distance into x and y coordinates.
+			 * Remember that the standard angle rotates clockwise, contrary to the mathematical 
+			 * definition (see SimpleSpriteUniverse). The angle does need to be converted to
+			 * radians, but the sine and cosine functions will work correctly with standard angles.
+			 * 
+			 * The cosine and sine function give the x and y coordinate for a circle of radius
+			 * 1. Thus, to include a magnitude (i.e. a movement for a given distance at a given angle),
+			 * we multiply the coordinates by the distance
+			 */
 			double angleInRadians = Math.toRadians(currentAngle);
-			double bulletVelocityX = Math.cos(angleInRadians) * bulletVelocity + velocityX;
-			double bulletVelocityY = Math.sin(angleInRadians) * bulletVelocity + velocityY;
+			double bulletVelocityX = Math.cos(angleInRadians) * BULLET_VELOCITY;
+			double bulletVelocityY = Math.sin(angleInRadians) * BULLET_VELOCITY;
+			/*
+			 * As the bullet's absolute velocity is relative to the spaceship's velocity
+			 * add the latter to the former.
+			 */
+			bulletVelocityX += velocityX;
+			bulletVelocityY += velocityY;
 			
 			double bulletCurrentX = this.getCenterX();
 			double bulletCurrentY = this.getCenterY();
