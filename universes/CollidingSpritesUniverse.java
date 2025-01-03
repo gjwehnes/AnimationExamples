@@ -23,13 +23,13 @@ public class CollidingSpritesUniverse implements Universe {
 		}
 		
 		//top
-		sprites.add(new BarrierSprite(AnimationFrame.SCREEN_WIDTH / -2,AnimationFrame.SCREEN_HEIGHT / -2, AnimationFrame.SCREEN_WIDTH / 2, AnimationFrame.SCREEN_HEIGHT / -2 + 16, true));
+		sprites.add(new BarrierSprite(AnimationFrame.STANDARD_SCREEN_WIDTH / -2,AnimationFrame.STANDARD_SCREEN_HEIGHT / -2, AnimationFrame.STANDARD_SCREEN_WIDTH / 2, AnimationFrame.STANDARD_SCREEN_HEIGHT / -2 + 16, true));
 		//bottom
-		sprites.add(new BarrierSprite(AnimationFrame.SCREEN_WIDTH / -2,AnimationFrame.SCREEN_HEIGHT / 2 - 16, AnimationFrame.SCREEN_WIDTH / 2, AnimationFrame.SCREEN_HEIGHT / 2, true));
+		sprites.add(new BarrierSprite(AnimationFrame.STANDARD_SCREEN_WIDTH / -2,AnimationFrame.STANDARD_SCREEN_HEIGHT / 2 - 16, AnimationFrame.STANDARD_SCREEN_WIDTH / 2, AnimationFrame.STANDARD_SCREEN_HEIGHT / 2, true));
 		//left
-		sprites.add(new BarrierSprite(AnimationFrame.SCREEN_WIDTH / -2,AnimationFrame.SCREEN_HEIGHT / -2, AnimationFrame.SCREEN_WIDTH / -2 + 16, AnimationFrame.SCREEN_HEIGHT / 2, true));
+		sprites.add(new BarrierSprite(AnimationFrame.STANDARD_SCREEN_WIDTH / -2,AnimationFrame.STANDARD_SCREEN_HEIGHT / -2, AnimationFrame.STANDARD_SCREEN_WIDTH / -2 + 16, AnimationFrame.STANDARD_SCREEN_HEIGHT / 2, true));
 		//right
-		sprites.add(new BarrierSprite(AnimationFrame.SCREEN_WIDTH / 2 - 16,AnimationFrame.SCREEN_HEIGHT / -2, AnimationFrame.SCREEN_WIDTH / 2, AnimationFrame.SCREEN_HEIGHT / 2, true));
+		sprites.add(new BarrierSprite(AnimationFrame.STANDARD_SCREEN_WIDTH / 2 - 16,AnimationFrame.STANDARD_SCREEN_HEIGHT / -2, AnimationFrame.STANDARD_SCREEN_WIDTH / 2, AnimationFrame.STANDARD_SCREEN_HEIGHT / 2, true));
 		
 	}
 

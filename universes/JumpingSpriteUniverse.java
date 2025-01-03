@@ -23,11 +23,11 @@ public class JumpingSpriteUniverse implements Universe {
 		//bottom platform
 		sprites.add(new BarrierSprite(-150,184, 150, 200, true));
 		//bottom
-		sprites.add(new BarrierSprite(AnimationFrame.SCREEN_WIDTH / -2,AnimationFrame.SCREEN_HEIGHT / 2 - 16, AnimationFrame.SCREEN_WIDTH / 2, AnimationFrame.SCREEN_HEIGHT / 2, true));
+		sprites.add(new BarrierSprite(AnimationFrame.STANDARD_SCREEN_WIDTH / -2,AnimationFrame.STANDARD_SCREEN_HEIGHT / 2 - 16, AnimationFrame.STANDARD_SCREEN_WIDTH / 2, AnimationFrame.STANDARD_SCREEN_HEIGHT / 2, true));
 		//left
-		sprites.add(new BarrierSprite(AnimationFrame.SCREEN_WIDTH / -2,AnimationFrame.SCREEN_HEIGHT / -2, AnimationFrame.SCREEN_WIDTH / -2 + 16, AnimationFrame.SCREEN_HEIGHT / 2, true));
+		sprites.add(new BarrierSprite(AnimationFrame.STANDARD_SCREEN_WIDTH / -2,AnimationFrame.STANDARD_SCREEN_HEIGHT / -2, AnimationFrame.STANDARD_SCREEN_WIDTH / -2 + 16, AnimationFrame.STANDARD_SCREEN_HEIGHT / 2, true));
 		//right
-		sprites.add(new BarrierSprite(AnimationFrame.SCREEN_WIDTH / 2 - 16,AnimationFrame.SCREEN_HEIGHT / -2, AnimationFrame.SCREEN_WIDTH / 2, AnimationFrame.SCREEN_HEIGHT / 2, true));
+		sprites.add(new BarrierSprite(AnimationFrame.STANDARD_SCREEN_WIDTH / 2 - 16,AnimationFrame.STANDARD_SCREEN_HEIGHT / -2, AnimationFrame.STANDARD_SCREEN_WIDTH / 2, AnimationFrame.STANDARD_SCREEN_HEIGHT / 2, true));
 
 		/*
 		 * It is possible to have one universe class act for multiple permutations.
@@ -37,12 +37,12 @@ public class JumpingSpriteUniverse implements Universe {
 		 * player and the portal are placed in different places.
 		 */
 		if (level == 0) {
-			portal = new PortalSprite(AnimationFrame.SCREEN_WIDTH / 2 - 50, AnimationFrame.SCREEN_HEIGHT / 2 - 100, 100, true);
-			player1 = new JumpingSprite(0,AnimationFrame.SCREEN_HEIGHT / 2 - 100);
+			portal = new PortalSprite(AnimationFrame.STANDARD_SCREEN_WIDTH / 2 - 50, AnimationFrame.STANDARD_SCREEN_HEIGHT / 2 - 100, 100, true);
+			player1 = new JumpingSprite(0,AnimationFrame.STANDARD_SCREEN_HEIGHT / 2 - 100);
 		}
 		else {
-			portal = new PortalSprite(AnimationFrame.SCREEN_WIDTH / -2, AnimationFrame.SCREEN_HEIGHT / 2 - 100, 100, true);
-			player1 = new JumpingSprite(AnimationFrame.SCREEN_WIDTH / -2 + 100, AnimationFrame.SCREEN_HEIGHT / 2 - 50);
+			portal = new PortalSprite(AnimationFrame.STANDARD_SCREEN_WIDTH / -2, AnimationFrame.STANDARD_SCREEN_HEIGHT / 2 - 100, 100, true);
+			player1 = new JumpingSprite(AnimationFrame.STANDARD_SCREEN_WIDTH / -2 + 100, AnimationFrame.STANDARD_SCREEN_HEIGHT / 2 - 50);
 		}
 
     	// The order in the sprites list determines the order of rendering.
