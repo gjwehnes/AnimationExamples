@@ -55,7 +55,7 @@ public class SpaceShipSprite implements DisplayableSprite {
 	}
 
 	public Image getImage() {
-		return rotatedImages[(int)currentAngle];
+		return rotatedImages[Math.floorMod((int)currentAngle, 360)];
 	}
 	
 	//DISPLAYABLE
@@ -140,15 +140,14 @@ public class SpaceShipSprite implements DisplayableSprite {
 			shoot(universe);	
 		}
 
+		//keep the angle within standard range
 	    if (currentAngle >= 360) {
 	    	currentAngle -= 360;
 	    }
 	    if (currentAngle < 0) {
 	    	currentAngle += 360;
 	    }	
-	    
-	    currentAngle %= 360;
-	    
+	    	    
 		//calculate new position assuming there are no changes in direction
 	    double movement_x = (this.velocityX * actual_delta_time * 0.001);
 	    double movement_y = (this.velocityY * actual_delta_time * 0.001);

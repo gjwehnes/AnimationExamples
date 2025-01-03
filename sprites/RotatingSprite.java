@@ -60,7 +60,13 @@ public class RotatingSprite implements DisplayableSprite {
 	}
 
 	public Image getImage() {
-		return rotatedImages[(int)currentAngle];
+		/* 
+		 * Convert angle into the correct image. The angle should already be >=0 and <= 360, but
+		 * we want to be careful when indexing into an array.
+		 * 
+		 * Note the use of floorMod instead of mod, as per https://en.wikipedia.org/wiki/Modulo
+		 */
+		return rotatedImages[Math.floorMod((int)currentAngle, 360)];
 	}
 	
 	//DISPLAYABLE
@@ -119,6 +125,8 @@ public class RotatingSprite implements DisplayableSprite {
 		 */
 		
 		currentAngle -= (ROTATION_SPEED * (actual_delta_time * 0.001));
+		
+		//keep the angle within standard range		
 	    if (currentAngle >= 360) {
 	    	currentAngle -= 360;
 	    }
@@ -126,7 +134,5 @@ public class RotatingSprite implements DisplayableSprite {
 	    	currentAngle += 360;
 	    }
 	    
-	    int frame = (int)currentAngle;
-	
 	}
 }
