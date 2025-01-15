@@ -8,6 +8,16 @@ public class MappedUniverse implements Universe {
 	private DisplayableSprite player1 = null;
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
 	private boolean inPortal = false;
+	/*
+	 * An example of having the universe center correspond to the player location, but
+	 * with smoothing implemented on the motion. You can also think of this as a 'camera'
+	 * following the player with a slight delay, and moving slower as it gets closer
+	 * from the player. See the use of these variables and constant in the getCenterX/Y
+	 * methods and the update method. Credit to AM for the contribution.
+	 */
+	private double centerX;
+	private double centerY;
+	private static final double SMOOTHING_FACTOR = 0.03;
 
 	public MappedUniverse () {
 
@@ -30,11 +40,11 @@ public class MappedUniverse implements Universe {
 	}	
 	
 	public double getXCenter() {
-		return this.player1.getCenterX();
+		return this.centerX;
 	}
 
 	public double getYCenter() {
-		return this.player1.getCenterY();
+		return this.centerY;
 	}
 	
 	public void setXCenter(double xCenter) {
@@ -85,6 +95,13 @@ public class MappedUniverse implements Universe {
 		else {
 			inPortal = false;
 		}
+		
+        double playerX = player1.getCenterX();
+        double playerY = player1.getCenterY();
+        
+        this.centerX += (playerX - this.centerX) * SMOOTHING_FACTOR; //implemented linear-interpolation smoothing based on online formulas and ChatGPT
+        this.centerY += (playerY - this.centerY) * SMOOTHING_FACTOR; //:D
+		
 		
 	}
 
