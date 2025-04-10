@@ -132,7 +132,7 @@ public class JumpingSprite implements DisplayableSprite {
 			 * The jumping behaviour is a 1-time subtraction of a constant amount of velocity in the y dimension. However, the
 			 * sprite is designed to only be able to jump when it is on the ground. Note the function which determines this state.
 			 */
-			if (keyboard.keyDown(32)) {
+			if (keyboard.keyDown(KeyboardInput.KEY_UP_ARROW)) {
 				this.velocityY -= INITIAL_JUMP_VELOCITY;
 				onGround = false;
 			}
