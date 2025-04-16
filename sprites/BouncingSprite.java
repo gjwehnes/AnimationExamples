@@ -48,6 +48,7 @@ public class BouncingSprite implements DisplayableSprite {
 		collisionTargetTypes.add(BouncingSprite.class);
 		collisionTargetTypes.add(PinballSprite.class);
 		collisionTargetTypes.add(JumpingSprite.class);
+		collisionTargetTypes.add(CollidingSprite.class);
 		collisionDetection.setCollisionTargetTypes(collisionTargetTypes);
 		collisionDetection.setBounceFactorX(1);
 		collisionDetection.setBounceFactorY(1);
